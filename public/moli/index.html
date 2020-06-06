@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="../asset/css/particlejs.css" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div id="content-wrapper">
+        <div class="mt-3 mx-auto text-center">
+            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addRole">Add
+                Player</button>
+            <button type="button" class="btn btn-outline-warning" onclick="test()">Warning</button>
+            <button type="button" class="btn btn-outline-danger">Danger</button>
+            <button type="button" class="btn btn-outline-info">Info</button>
+            <button type="button" class="btn btn-outline-light">Light</button>
+        </div>
+        <div>
+            <h4 class="text-white text-center" id="welcomerText"></h4>
+        </div>
+        <div id="playerCardContainer" class="card-group"> </div>
+
+    </div>
+
+    <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add a new Player</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" id="addPlayerModelFormContainer">
+                        <input type="text" class="form-control mt-2" id="nameInput" placeholder="Name">
+                        <div class="custom-file mt-2">
+                            <input type="file" class="custom-file-input" id="fileInput">
+                            <label class="custom-file-label" for="fileInput" id="fileInputLabel">Choose
+                                file</label>
+                        </div>
+                        <input type="number" class="form-control mt-2 " id="levelInput" placeholder="Level ">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" disabled id="addRoleSaveBtn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../asset/js/particle.js "></script>
+    <script src="../asset/js/fb.js "></script>
+    <script src="app.js "></script>
+</body>
+
+</html>

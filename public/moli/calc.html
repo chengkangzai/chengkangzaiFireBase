@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="../asset/css/particlejs.css" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body class="text-white">
+    <div id="content-wrapper">
+        <div class="mx-auto text-center col-lg-5 border m-3  p-3">
+            <h1>计算可以有多少</h1>
+            <input type="number" placeholder="有多少" id="calcInput" class="form-control mt-2" />
+            <input type="number" placeholder="升几级？" id="calcLevelInput" class="form-control mt-2" />
+            <p id="calcOutput"></p>
+            <button class="btn btn-primary mt-2" onclick="howMuchHave()">有多少！？</button>
+        </div>
+        <div class="mx-auto text-center col-lg-5 border m-3 p-3">
+            <h1>计算要花多少才到达</h1>
+            <input type="number" name="" placeholder="多少个" id="numInput" class="form-control mt-2">
+            <select name="" id="colorForNum" class="form-control mt-2">
+                <option selected disabled hidden> 选一个颜色啦</option>
+                <option value="blue" class="text-white" style="background-color: blue">蓝色</option>
+                <option value="purple" class="text-white" style="background-color:blueviolet">紫色</option>
+                <option value="orange" class="text-white" style="background-color: orange">橙色</option>
+            </select>
+            <p id="numOutput"></p>
+            <button class="btn btn-primary mt-2" onclick="calc()">要多少！？</button>
+        </div>
+    </div>
+    <script src="../asset/js/particle.js"></script>
+    <script src="calc.js"></script>
+</body>
+
+</html>
