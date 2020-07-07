@@ -74,72 +74,88 @@ $("#addRoleSaveBtn").click((e) => {
     }
 });
 
+function objectLength(object) {
+    var length = 0;
+    for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+            ++length;
+        }
+    }
+    return length;
+};
+
 function renderPlayer(doc) {
     var id = doc.id;
     const data = doc.data();
 
+    var materialListHead = `<thead class="thead-light"><tr><td>名字</td><td>已有材料</td><td>需求材料</td></tr></thead>`;
+
     var materialList = [];
     var progressBar = [];
     var tempest = [];
-    data.material.forEach(element => {
-        function calcWhiteBase(num, color) {
-            switch (color) {
-                case "white":
-                    whiteBase = num;
-                    break;
-                case "green":
-                    whiteBase = num * 5;
-                    break;
-                case "blue":
-                    whiteBase = num * 5 * 5
-                    break;
-                case "purple":
-                    whiteBase = num * 5 * 5 * 5
-                    break;
-                case "orange":
-                    whiteBase = num * 5 * 5 * 5 * 5
-                    break;
+    if (objectLength(data.material) >= 1) {
+        data.material.forEach(element => {
+            function calcWhiteBase(num, color) {
+                switch (color) {
+                    case "white":
+                        whiteBase = num;
+                        break;
+                    case "green":
+                        whiteBase = num * 5;
+                        break;
+                    case "blue":
+                        whiteBase = num * 5 * 5
+                        break;
+                    case "purple":
+                        whiteBase = num * 5 * 5 * 5
+                        break;
+                    case "orange":
+                        whiteBase = num * 5 * 5 * 5 * 5
+                        break;
+                }
+                return whiteBase;
             }
-            return whiteBase;
-        }
 
-        var name = element.name;
-        var haveColor = element.have.color;
-        var haveNumber = element.have.number;
-        var wantedColor = element.wanted.color;
-        var wantedNumber = element.wanted.number;
+            var name = element.name;
+            var haveColor = element.have.color;
+            var haveNumber = element.have.number;
+            var wantedColor = element.wanted.color;
+            var wantedNumber = element.wanted.number;
 
-        var haveWhite = calcWhiteBase(haveNumber, haveColor);
-        var wantedWhite = calcWhiteBase(wantedNumber, wantedColor);
+            var haveWhite = calcWhiteBase(haveNumber, haveColor);
+            var wantedWhite = calcWhiteBase(wantedNumber, wantedColor);
 
-        var percentage = (haveWhite / wantedWhite) * 100;
-        if (percentage >= 100) {
-            progressBar.push(`                    
-            <div class="progress m-2">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="${percentage}" style="width: ${percentage}%">${name}</div>
-            </div>`);
-        } else if (percentage <= 0) {
-            progressBar.push(`                    
-            <div class="progress m-2">
-                <div class=" text-dark progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${percentage}%">${name}</div>
-            </div>`);
-        } else {
-            progressBar.push(`                    
-            <div class="progress m-2">
-                <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${percentage}%">${name}</div>
-            </div>`);
-        }
+            var percentage = (haveWhite / wantedWhite) * 100;
+            if (percentage >= 100) {
+                progressBar.push(`                    
+                    <div class="progress m-2">
+                        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="${percentage}" style="width: ${percentage}%">${name}</div>
+                    </div>`);
+            } else if (percentage <= 0) {
+                progressBar.push(`                    
+                    <div class="progress m-2">
+                        <div class=" text-dark progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${percentage}%">${name}</div>
+                    </div>`);
+            } else {
+                progressBar.push(`                    
+                    <div class="progress m-2">
+                        <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${percentage}%">${name}</div>
+                    </div>`);
+            }
 
-        materialList.push(`
-        <tr>
-            <td>${name}</td>
-            <td>${haveColor}(${haveNumber})</td>
-            <td>${wantedColor}(${wantedNumber})</td>
-        </tr>
-        `)
+            materialList.push(`
+                <tr>
+                    <td>${name}</td>
+                    <td>${haveColor}(${haveNumber})</td>
+                    <td>${wantedColor}(${wantedNumber})</td>
+                </tr>
+                `)
 
-        tempest.push(`<option value="${element.name}"> ${element.name}</option>`);
-    });
+            tempest.push(`<option value="${element.name}"> ${element.name}</option>`);
+        });
+    } else {
+        materialListHead = "";
+    }
 
     var modalForAdd = `
     <div class="modal fade" id="addMaterialForm${id}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -222,13 +238,13 @@ function renderPlayer(doc) {
     `;
 
     var dom = `
-    <div class="card m-2" style="max-width: 25%; height:100%">
+    <div class="card m-1 col-lg-3" style="height:100%">
         <img class="card-img-top" src="${data.picUrl}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">${data.name}</h5>
             <p class="card-text">Level : ${data.level}</p>
             <table class="table table-borderless table-sm m-0 p-0" >
-                <thead class="thead-light"><tr><td>名字</td><td>已有材料</td><td>需求材料</td></tr></thead>
+                ${materialListHead}
                 <tbody>${materialList.sort().join("")}</tbody>
             </table>
             <div id="progressContainer">
@@ -248,6 +264,7 @@ function renderPlayer(doc) {
 }
 
 function updateMaterial(docID) {
+
     const name = $(`#materialType${docID} :selected`);
     const haveColor = $(`#haveColorType${docID} :selected`);
     const haveNumber = $(`#haveNumberInput${docID}`);
@@ -338,42 +355,37 @@ function deleteMaterial(docID) {
     if (name.attr("hidden")) {
         name.parent().removeClass("is-valid").addClass("is-invalid");
     } else {
-        if (confirm("Are you sure you want to delete " + name.val() + " from the database ?")) {
-            var temp;
-            firebase.auth().onAuthStateChanged(function(user) {
-                db
-                    .doc(`moli/${user.uid}/player/${docID}`)
-                    .get()
-                    .then(function(doc) {
-                        temp = doc.data().material;
-                        for (let i = 0; i < temp.length; i++) {
-                            if (temp[i].name == name.val()) {
-                                temp.splice(i, 1);
-                            }
+        var temp;
+        firebase.auth().onAuthStateChanged(function(user) {
+            db
+                .doc(`moli/${user.uid}/player/${docID}`)
+                .get()
+                .then(function(doc) {
+                    temp = doc.data().material;
+                    for (let i = 0; i < temp.length; i++) {
+                        if (temp[i].name == name.val()) {
+                            temp.splice(i, 1);
                         }
-                        db
-                            .doc(`moli/${user.uid}/player/${docID}`)
-                            .update({
-                                material: temp
-                            })
-                            .then(function(doc) {
-                                $(`.modal-backdrop`).hide()
-                            })
-                            .catch(function(error) {
-                                console.log(error)
-                            })
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    })
-            });
-        }
+                    }
+                    db
+                        .doc(`moli/${user.uid}/player/${docID}`)
+                        .update({
+                            material: temp
+                        })
+                        .then(function(doc) {
+                            $(`.modal-backdrop`).hide()
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
+        });
     }
 }
 
-function test() {
-    console.log(confirm("are you sure?"));
-}
 firebase.auth().onAuthStateChanged(user => {
     (user) ? $("#welcomerText").text(`Hello ! ${user.displayName}`): window.location.href = "../index.html"
     db
@@ -384,4 +396,9 @@ firebase.auth().onAuthStateChanged(user => {
                 renderPlayer(doc);
             });
         })
+});
+
+$(document).on('load', function() {
+
+    $("#navBar").load("nav.html");
 });

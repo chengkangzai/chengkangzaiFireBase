@@ -11,7 +11,7 @@ var uiConfig = {
     },
     'credentialHelper': firebaseui.auth.CredentialHelper.NONE,
     signInFlow: 'popup',
-    signInSuccessUrl: 'moli/index.html',
+    signInSuccessUrl: 'ngrok/index.html',
     signInOptions: [{ provider: firebase.auth.EmailAuthProvider.PROVIDER_ID, }, {
         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID
     }],

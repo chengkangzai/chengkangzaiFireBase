@@ -26,19 +26,15 @@
 
 <body>
     <div id="content-wrapper">
+        <nav></nav>
         <div class="mt-3 mx-auto text-center">
-            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addRole">Add
-                Player</button>
-            <button type="button" class="btn btn-outline-warning" onclick="test()">Warning</button>
-            <button type="button" class="btn btn-outline-danger">Danger</button>
-            <button type="button" class="btn btn-outline-info">Info</button>
-            <button type="button" class="btn btn-outline-light">Light</button>
+            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#addRole">Add Player</button>
+            <a type="button" class="btn btn-outline-warning" href="calc.html">Calculator </a>
         </div>
         <div>
             <h4 class="text-white text-center" id="welcomerText"></h4>
         </div>
         <div id="playerCardContainer" class="card-group"> </div>
-
     </div>
 
     <div class="modal fade" id="addRole" tabindex="-1" role="dialog" aria-hidden="true">
@@ -70,6 +66,7 @@
 
 
     <script src="../asset/js/particle.js "></script>
+    <script src="../asset/js/nav.js"></script>
     <script src="../asset/js/fb.js "></script>
     <script src="app.js "></script>
 </body>
