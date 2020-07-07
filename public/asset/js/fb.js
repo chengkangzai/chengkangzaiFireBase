@@ -11,3 +11,12 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+
+function logout() {
+    firebasefirebase.auth().signOut()
+        .then(function() {
+            window.location.href = "/index.html";
+        }).catch(function(error) {
+            console.log("Sth wrong happened " + error);
+        });
+}
