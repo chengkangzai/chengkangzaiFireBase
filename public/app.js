@@ -34,5 +34,5 @@ if ((firebase.auth().isSignInWithEmailLink(window.location.href))) {
 }
 
 firebase.auth().onAuthStateChanged(user => {
-    if (user) { window.location.href = "moli/index.html"; }
+    if (user) { window.location.href = "ngrok/index.html"; }
 });
