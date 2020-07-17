@@ -125,17 +125,32 @@ function renderPC(data) {
 
     // console.log(mainDom);
     $("#ngrokContainer").append(mainDom);
+}
 
-
+function renderNoRight() {
+    var dom = `<div class='p-2 col-lg-6 mx-auto'>
+        <div class='card text-center py-5'>
+            <div class='card-body'>
+                <h5 class='card-title text-danger'> You have no right to view this page <h5>
+                <p class='card-text'> 403 </p>
+            </div>
+        </div>
+    </div>`;
+    $("#ngrokContainer").append(dom);
 }
 
 
-
-db
-    .collection("ngrok")
-    .onSnapshot(function(snap) {
-        $("#ngrokContainer").replaceWith("<div class='row m-0' id='ngrokContainer'></div>");
-        snap.forEach(function(doc) {
-            renderPC(doc);
-        });
-    });
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user.email == "pycck@hotmail.com" || user.email == "kangkangge.ge@gmail.com") {
+        db
+            .collection("ngrok")
+            .onSnapshot(function(snap) {
+                $("#ngrokContainer").replaceWith("<div class='row m-0' id='ngrokContainer'></div>");
+                snap.forEach(function(doc) {
+                    renderPC(doc);
+                });
+            });
+    } else {
+        renderNoRight();
+    }
+});
