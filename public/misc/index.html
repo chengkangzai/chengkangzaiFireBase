@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <title>PHP key generator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../asset/css/particlejs.css">
+</head>
+
+<body>
+    <nav></nav>
+    <div id="content-wrapper">
+        <div class="mt-3 mx-auto text-center">
+            <button type="button" class="btn btn-outline-success" id="btn-openGenerateKey">From text to key </button>
+            <button type="button" class="btn btn-outline-warning" id="btn-openGenerateExcel">From key to excel </button>
+        </div>
+        <div class="mx-auto col-lg-8 row" id="generateKey" style="display: none">
+            <div class="col-lg-6">
+                <h3 class="text-white text-center">Input</h3>
+                <input type="text" id="input" class="form-control mb-1" placeholder="input">
+                <input type="text" id="input1" class="form-control mb-1" placeholder="File Path">
+            </div>
+            <div class="col-lg-6">
+                <h3 class="text-white text-center">Output</h3>
+                <textarea id="output" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                <textarea id="output1" cols="30" rows="5" class="mb-1 form-control" placeholder="Blade output"></textarea>
+            </div>
+        </div>
+        <div class="mx-auto col-lg-8 row" id="generateExcel" style="display: none">
+
+            <div class="col-lg-6">
+                <h3 class="text-white text-center">Input</h3>
+                <input type="text" id="bladeInput" class="form-control mb-1" placeholder="bladeInput">
+                <input type="text" id="wordInput" class="form-control mb-1" placeholder="Message">
+            </div>
+            <div class="col-lg-6">
+                <h3 class="text-white text-center">Output</h3>
+                <textarea id="outputExcel" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="../asset/js/particle.js"></script>
+    <script src="../asset/js/nav.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
