@@ -13,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function logout() {
-    firebasefirebase.auth().signOut()
+    firebase.auth().signOut()
         .then(function() {
             window.location.href = "/index.html";
         }).catch(function(error) {
