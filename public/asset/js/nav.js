@@ -14,7 +14,11 @@ var navDom =
             <li class="nav-item">
                 <a class="nav-link" href="../ngrok">Ngrok</a>
             </li>
-        </ul>
+            <li class="nav-item">
+                <a class="nav-link" href="../misc">Tools</a>
+            </li>
+        </ul> 
+        <a href="#" onclick="logout()" class="btn btn-outline-info ">Log out</a>
     </div>
 </nav>
 `;
