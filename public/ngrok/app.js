@@ -89,7 +89,8 @@ function deletePC(pcName, id) {
 function renderPC(data) {
     var info = data.data();
     var vpnDom = "<div></div>",
-        vpnBtn = "<div></div>";
+        vpnBtn = "<div></div>",
+        inactiveDom = "";
 
     var lastSeen = new Date(info.timestamp.toDate()).toLocaleString();
     var ran = Math.round(Math.random() * 100132400);
@@ -105,11 +106,22 @@ function renderPC(data) {
         copyBtn = `<a id='copyNgrok_${ran}' class='mt-1 btn btn-primary text-white' onclick='copyTunnelAddress(${ran})' role='button' href='${info.ngrok}'>
         Go to ${info.PCName}</a>`;
     };
+
+    var lastReport = calcMissingHour(info.timestamp);
+    if (lastReport > 24) {
+        inactiveDom = `
+        <div class="alert alert-danger fade show" role="alert" +>
+            Haven't see this PC in ${Math.round(lastReport)} hour
+        </div>
+        `;
+    }
+
     var mainDom = `
     <div class='p-2 col-lg-3'>
         <div class='card ' id='div_${ran}'>
             <div class='card-body'>
                 <h5 class='card-title' ">${info.PCName}<h5>
+                ${inactiveDom}
                 <p class='card-text' id='ngrokID_${ran}'>${info.ngrok}</p>
                 <input value='${info.ngrok}' id='ngrokInput_${ran}' style='display:none'>
                 ${vpnDom}
@@ -139,6 +151,13 @@ function renderNoRight() {
     $("#ngrokContainer").append(dom);
 }
 
+function calcMissingHour(time) {
+    const date1 = new Date(time.toDate())
+    const date2 = new Date()
+    var DIffInTime = date2.getTime() - date1.getTime();
+    var DiffInHour = DIffInTime / (1000 * 3600);
+    return DiffInHour;
+}
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user.email == "pycck@hotmail.com" || user.email == "kangkangge.ge@gmail.com") {
