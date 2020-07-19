@@ -11,19 +11,38 @@ $("#wordInput").on('keyup', function() {
     renderExcel();
 });
 
+function resetAllBox() {
+    $("#generateKey").hide();
+    $("#generateExcel").hide();
+}
+
+function resetAllButton() {
+    $("#btn-openGenerateKey").removeClass("btn-success").addClass("btn-outline-success")
+    $("#btn-openGenerateExcel").removeClass("btn-warning").addClass("btn-outline-warning")
+}
+
 $("#btn-openGenerateKey").on('click', function() {
     var div = $("#generateKey");
+
     if (div.css('display') == "none") {
-        div.css('display', 'flex')
+        resetAllButton();
+        $("#btn-openGenerateKey").addClass("btn-success").removeClass("btn-outline-success")
+        resetAllBox();
+        div.css('display', 'block')
     } else {
         div.css('display', 'none')
+        $("#btn-openGenerateKey").addClass("btn-outline-success").removeClass("btn-success")
     }
 })
 $("#btn-openGenerateExcel").on('click', function() {
     var div = $("#generateExcel");
     if (div.css('display') == "none") {
-        div.css('display', 'flex')
+        resetAllButton();
+        $("#btn-openGenerateExcel").addClass("btn-warning").removeClass("btn-outline-warning")
+        resetAllBox();
+        div.css('display', 'block')
     } else {
+        $("#btn-openGenerateExcel").addClass("btn-outline-warning").removeClass("btn-warning")
         div.css('display', 'none')
     }
 })
@@ -60,7 +79,9 @@ function renderExcel() {
 
     if (keyInn == key) {
         $("#outputExcel").val(xxx);
+        $("#outputExcel").addClass("is-valid").removeClass("is-invalid")
     } else {
+        $("#outputExcel").addClass("is-invalid").removeClass("is-valid")
         console.log("Diff key ");
     }
 }

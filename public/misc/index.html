@@ -19,28 +19,33 @@
             <button type="button" class="btn btn-outline-success" id="btn-openGenerateKey">From text to key </button>
             <button type="button" class="btn btn-outline-warning" id="btn-openGenerateExcel">From key to excel </button>
         </div>
-        <div class="mx-auto col-lg-8 row" id="generateKey" style="display: none">
-            <div class="col-lg-6">
-                <h3 class="text-white text-center">Input</h3>
-                <input type="text" id="input" class="form-control mb-1" placeholder="input">
-                <input type="text" id="input1" class="form-control mb-1" placeholder="File Path">
-            </div>
-            <div class="col-lg-6">
-                <h3 class="text-white text-center">Output</h3>
-                <textarea id="output" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
-                <textarea id="output1" cols="30" rows="5" class="mb-1 form-control" placeholder="Blade output"></textarea>
+        <div id="generateKey" style="display: none; margin: 0;">
+            <h3 class="text-white text-center underlined">Text to key</h3>
+            <div class="mx-auto col-lg-8 row m-0">
+                <div class="col-lg-6 m-0">
+                    <h3 class="text-white text-center">Input</h3>
+                    <input type="text" id="input" class="form-control mb-1" placeholder="input">
+                    <input type="text" id="input1" class="form-control mb-1" placeholder="File Path">
+                </div>
+                <div class="col-lg-6 m-0">
+                    <h3 class="text-white text-center">Output</h3>
+                    <textarea id="output" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                    <textarea id="output1" cols="30" rows="5" class="mb-1 form-control" placeholder="Blade output"></textarea>
+                </div>
             </div>
         </div>
-        <div class="mx-auto col-lg-8 row" id="generateExcel" style="display: none">
-
-            <div class="col-lg-6">
-                <h3 class="text-white text-center">Input</h3>
-                <input type="text" id="bladeInput" class="form-control mb-1" placeholder="bladeInput">
-                <input type="text" id="wordInput" class="form-control mb-1" placeholder="Message">
-            </div>
-            <div class="col-lg-6">
-                <h3 class="text-white text-center">Output</h3>
-                <textarea id="outputExcel" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+        <div id="generateExcel" style="display: none">
+            <h3 class="text-white mx-auto mt-3 text-center">Key to excel</h3>
+            <div class="mx-auto col-lg-8 row">
+                <div class="col-lg-6">
+                    <h3 class="text-white text-center">Input</h3>
+                    <input type="text" id="bladeInput" class="form-control mb-1" placeholder="bladeInput">
+                    <input type="text" id="wordInput" class="form-control mb-1" placeholder="Message">
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="text-white text-center">Output</h3>
+                    <textarea id="outputExcel" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                </div>
             </div>
         </div>
     </div>
