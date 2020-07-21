@@ -6,7 +6,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../asset/css/particlejs.css">
@@ -18,6 +22,7 @@
         <div class="mt-3 mx-auto text-center">
             <button type="button" class="btn btn-outline-success" id="btn-openGenerateKey">From text to key </button>
             <button type="button" class="btn btn-outline-warning" id="btn-openGenerateExcel">From key to excel </button>
+            <button type="button" class="btn btn-outline-info" id="btn-openGenerateExcelToKey">From excel to key </button>
         </div>
         <div id="generateKey" style="display: none; margin: 0;">
             <h3 class="text-white text-center underlined">Text to key</h3>
@@ -48,6 +53,25 @@
                 </div>
             </div>
         </div>
+        <div id="generateExcelToKey" style="display: none">
+            <h3 class="text-white mx-auto mt-3 text-center">Excel to key</h3>
+            <div class="mx-auto col-lg-8 row">
+                <div class="col-lg-6">
+                    <h3 class="text-white text-center">Input</h3>
+                    <textarea id="inputExcel" cols="30" rows="5" class="mb-1 form-control" placeholder="Input"></textarea>
+                    <a id="submitExcelInput" class="btn btn-primary" href="#" role="button">Submit</a>
+                    <a id="selectButton" class="btn btn-success" href="#" role="button">Select</a>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="text-white text-center">Output</h3>
+                    <select class="form-control mb-1" id="fileSelection"></select>
+                    <textarea id="excelZH" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                    <textarea id="excelTH" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                    <textarea id="excelMY" cols="30" rows="5" class="mb-1 form-control" placeholder="Output"></textarea>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -57,6 +81,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="../asset/js/particle.js"></script>
     <script src="../asset/js/nav.js"></script>
+    <script src="../asset/js/fb.js"></script>
     <script src="app.js"></script>
 </body>
 
