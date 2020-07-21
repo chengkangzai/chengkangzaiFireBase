@@ -108,10 +108,16 @@ function renderPC(data) {
     };
 
     var lastReport = calcMissingHour(info.timestamp);
-    if (lastReport > 24) {
+    if (lastReport > 12) {
         inactiveDom = `
         <div class="alert alert-danger fade show" role="alert" +>
             Haven't see this PC in ${Math.round(lastReport)} hour
+        </div>
+        `;
+    } else if (lastReport > 2) {
+        inactiveDom = `
+        <div class="alert alert-success fade show" role="alert" +>
+            This PC is seen in ${Math.round(lastReport)} hour
         </div>
         `;
     }
