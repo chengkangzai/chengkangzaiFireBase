@@ -53,7 +53,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
 exports.ngrokUpdate = functions.https.onRequest((req, res) => {
     var ngrokStatus = {
         PCName: req.body.pcName || "N/A",
-        vpn: req.body.vpn || "N/A",
+        vpn: req.body.vpnIP || "N/A",
         ngrok: req.body.ngrok || "N/A",
         protocol: req.body.protocol || "N/A",
         timestamp: admin.firestore.Timestamp.fromDate(new Date())
