@@ -18,6 +18,15 @@ $("#selectButton").on('click', function() {
     renderSelection();
 });
 
+var uid;
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        uid = user.uid;
+    } else {
+        // User is signed out.
+    }
+});
+
 function resetAllBox() {
     $("#generateKey").hide();
     $("#generateExcel").hide();
@@ -64,9 +73,8 @@ $("#btn-openGenerateExcelToKey").on('click', function() {
         $("#btn-openGenerateExcelToKey").addClass("btn-info").removeClass("btn-outline-info")
         resetAllBox();
         div.css('display', 'block')
-            // initialize file and object
         db
-            .collection("misc/phpKey/laravel")
+            .collection(`misc/${uid}/laravelKey`)
             .get()
             .then((snap) => {
                 snap.forEach(function(doc) {
@@ -141,7 +149,7 @@ function submitToFB() {
             }
             console.log(object);
             db
-                .collection("misc/phpKey/laravel")
+                .collection(`misc/${uid}/laravelKey`)
                 .add(Object.assign({}, object))
                 .then((response) => {
                     $("#inputExcel").addClass("is-valid").removeClass("is-invalid")
@@ -150,6 +158,7 @@ function submitToFB() {
                 .catch((error) => {
                     console.log(error)
                 });
+
         } else {
             $("#inputExcel").addClass("is-invalid").removeClass("is-valid")
         }
