@@ -21,9 +21,8 @@ function copyTunnelAddress(id) {
     $(`#ngrokInput_${id}`).show();
     var copyText = document.getElementById(`ngrokInput_${id}`);
 
-    /* Select the text field */
     copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    copyText.setSelectionRange(0, 99999);
 
     document.execCommand("copy");
 
@@ -41,9 +40,8 @@ function copymstsc(id) {
     $(`#ngrokInput_${id}`).show();
     var copyText = document.getElementById(`ngrokInput_${id}`);
 
-    /* Select the text field */
     copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    copyText.setSelectionRange(0, 99999);
 
     document.execCommand("copy");
 
@@ -55,12 +53,10 @@ function copymstsc(id) {
 
 function copyVPNAddress(id) {
     $(`#VPNInput_${id}`).show();
-
     var copyText = document.getElementById(`VPNInput_${id}`);
 
-    /* Select the text field */
     copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    copyText.setSelectionRange(0, 99999);
 
     document.execCommand("copy");
 
@@ -141,7 +137,6 @@ function renderPC(data) {
     </div>
     `;
 
-    // console.log(mainDom);
     $("#ngrokContainer").append(mainDom);
 }
 
