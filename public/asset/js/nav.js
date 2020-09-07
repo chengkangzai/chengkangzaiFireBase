@@ -15,7 +15,7 @@ var navDom =
                 <a class="nav-link" href="../ngrok">Ngrok</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../feedback">Feedback</a>
+                <a class="nav-link" href="../Feedback">Feedback</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../misc">Tools</a>
