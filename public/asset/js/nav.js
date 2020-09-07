@@ -20,9 +20,6 @@ var navDom =
             <li class="nav-item">
                 <a class="nav-link" href="../misc">Tools</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../stupid">Stupid</a>
-            </li>
         </ul> 
         <a href="#" onclick="logout()" class="btn btn-outline-info ">Log out</a>
     </div>
