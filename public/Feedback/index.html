@@ -6,28 +6,22 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+    <script defer src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="//unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="../asset/css/particlejs.css" />
     <link rel="stylesheet" href="style.css" />
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.1/js/mdb.min.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script defer src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"></script>
+    <script defer src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"></script>
 </head>
 
 <body>
@@ -45,10 +39,10 @@
                 </div>
 
                 <div class="form-group">
-                    <textarea name="Feedback" rows="5" id="feedbackValue" class="form-control" placeholder="Enter your Feedback here :3" onkeydown="checkIfIsEnter(event)"></textarea>
+                    <textarea name="Feedback" rows="5" id="feedbackValue" class="form-control bg-white" placeholder="Enter your Feedback here :3" onkeydown="checkIfIsEnter(event)"></textarea>
 
                     <button class="btn btn-primary mt-3" type="submit" value="submit" onclick="submitFeedback()">Submit! </button>
-                    <a class="btn btn-info mt-3" href="/index.html" role="button">Back </a>
+                    <a class="btn btn-info mt-3" href="../index.html" role="button">Back </a>
 
                 </div>
 
@@ -56,10 +50,10 @@
         </div>
     </div>
 
-    <script src="../asset/js/particle.js "></script>
-    <script src="../asset/js/nav.js"></script>
-    <script src="../asset/js/fb.js "></script>
-    <script src="app.js "></script>
+    <script defer src="../asset/js/particle.js "></script>
+    <script defer src="../asset/js/nav.js"></script>
+    <script defer src="../asset/js/fb.js "></script>
+    <script defer src="app.js "></script>
 </body>
 
 </html>
