@@ -5,6 +5,13 @@ admin.initializeApp();
 const db = admin.firestore();
 
 exports.updateUnit = functions.https.onRequest((req, res) => {
+    if (req.method === "GET") {
+        res.send({
+            status: 400,
+            message: "Please do not use GET method to open this API 😡😡😡😡"
+        })
+    }
+
     var unitInfo = {
         unitNumber: req.body.unitNumber || "N/A",
         ssid: req.body.ssid || "N/A",
@@ -17,14 +24,6 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
         routerPass: req.body.routerPass || "N/A",
         timestamp: admin.firestore.Timestamp.fromDate(new Date()),
     };
-
-    if (req.method === "GET") {
-        res.send({
-            status: 400,
-            message: "Please do not use GET method to open this API 😡😡😡😡"
-        })
-        process.exit()
-    }
 
     function validate() {
         verifyToken()
@@ -46,6 +45,8 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
         }
         return true;
     }
+
+    validate();
 
     function addUnit() {
         console.log("Adding");
@@ -105,13 +106,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
             .where('token', "==", token)
             .get()
             .then(snap => {
-                if (snap.empty) {
-                    return false;
-                } else {
-                    snap.forEach(doc => {
-                        unitInfo.updatedBy = doc.data().email;
-                        console.log(doc.data().email);
-                    });
+                if (!snap.empty) {
                     return true;
                 }
             })
@@ -122,35 +117,42 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
 
     }
 
-    if (validate()) {
-        db
-            .collection("AccomUnit")
-            .where('unitNumber', '==', unitInfo.unitNumber)
-            .get()
-            .then(snap => {
-                if (snap.empty) {
-                    addUnit()
-                } else {
-                    snap.forEach((data) => {
-                        docId = data.id;
-                    });
-                    updateUnit(docId)
-                }
-                return true;
-            })
-            .catch(error => {
-                console.log("Error occur during finding exiting unit", error);
-                res.send({
-                    status: 500,
-                    message: "Unit Saving error ! please contact backend developer",
-                    error: error
+
+    db
+        .collection("AccomUnit")
+        .where('unitNumber', '==', unitInfo.unitNumber)
+        .get()
+        .then(snap => {
+            if (snap.empty) {
+                addUnit()
+            } else {
+                snap.forEach((data) => {
+                    docId = data.id;
                 });
-                return true;
+                updateUnit(docId)
+            }
+            return true;
+        })
+        .catch(error => {
+            console.log("Error occur during finding exiting unit", error);
+            res.send({
+                status: 500,
+                message: "Unit Saving error ! please contact backend developer",
+                error: error
             });
-    }
+            return true;
+        });
+
 })
 
 exports.ngrokUpdate = functions.https.onRequest((req, res) => {
+    if (req.method !== "POST") {
+        res.send({
+            status: 405,
+            message: "Method not Allow"
+        });
+    }
+
     var ngrokStatus = {
         PCName: req.body.pcName || "N/A",
         vpn: req.body.vpnIP || "N/A",
@@ -172,47 +174,46 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
         return true;
     }
 
+    validation();
+
     function addPC() {
-        validation();
         db
             .collection("ngrok")
             .add(ngrokStatus)
-            .then(response => {
-                res.send(response);
-                return true;
-            })
-            .catch(error => {
-                res.send(error);
-                return true;
-            });
+            .then(() => log("add"))
+            .catch();
         res.send({
             message: `This seem like you are first time register to the system! Welcome,${ngrokStatus.PCName} !`
         });
     }
 
     function updatePC(id) {
-        validation();
         db
             .doc(`ngrok/${id}`)
             .update(ngrokStatus)
-            .then((doc) => {
-                res.send(doc);
-                return true;
-            })
-            .catch((error) => {
-                res.send(error);
-                return true;
-            })
+            .then(() => log('update'))
+            .catch()
         res.send({
             message: `Welcome back, ${ngrokStatus.PCName}! `
         });
     }
 
+    function log(mode) {
+        db
+            .collection(`ngrok/log/${ngrokStatus.PCName}`)
+            .add({
+                ngrokStatus: ngrokStatus,
+                pcName: ngrokStatus.PCName,
+                mode: mode,
+                timestamp: admin.firestore.Timestamp.fromDate(new Date())
+            })
+            .then()
+            .catch();
+    }
 
-    var pcname = req.body.pcName;
     db
         .collection(`ngrok`)
-        .where('PCName', "==", pcname)
+        .where('PCName', "==", ngrokStatus.PCName)
         .get()
         .then(snap => {
             var docId;
@@ -224,12 +225,8 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
                 });
                 updatePC(docId)
             }
-            return true;
         })
-        .catch(error => {
-            res.send(error)
-            return true;
-        });
+        .catch();
 })
 
 exports.login = functions.https.onRequest((req, res) => {
@@ -260,6 +257,8 @@ exports.login = functions.https.onRequest((req, res) => {
         return true;
     }
 
+    validation();
+
     function registerToken(token) {
         db
             .collection(`authToken`)
@@ -287,10 +286,9 @@ exports.login = functions.https.onRequest((req, res) => {
     }
 
     function hashIt(secret, unit) {
-        const hash = crypto.createHmac('sha256', secret)
+        return crypto.createHmac('sha256', secret)
             .update(unit)
             .digest('hex');
-        return hash
     }
 
     function resToken(id) {
@@ -305,31 +303,27 @@ exports.login = functions.https.onRequest((req, res) => {
                 });
                 return true;
             })
-            .catch(error => {
-                console.log(error);
-                return true;
-            })
+            .catch()
     }
 
-    if (validation()) {
-        db
-            .collection(`authToken`)
-            .where('email', "==", data.email)
-            .where('unit', "==", data.unit)
-            .get()
-            .then(snap => {
-                if (snap.empty) {
-                    registerToken(hashIt(data.email, data.unit));
-                } else {
-                    snap.docs.forEach((data) => {
-                        resToken(data.id);
-                    });
-                }
-                return true;
-            })
-            .catch(error => {
-                res.status(500).send(error)
-                return true;
-            });
-    }
+    db
+        .collection(`authToken`)
+        .where('email', "==", data.email)
+        .where('unit', "==", data.unit)
+        .get()
+        .then(snap => {
+            if (snap.empty) {
+                registerToken(hashIt(data.email, data.unit));
+            } else {
+                snap.docs.forEach((data) => {
+                    resToken(data.id);
+                });
+            }
+            return true;
+        })
+        .catch(error => {
+            res.status(500).send(error)
+            return true;
+        });
+
 });
