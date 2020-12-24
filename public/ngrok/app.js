@@ -97,19 +97,18 @@ function renderPC(data) {
 
     const vpnBtn = (() => {
         if (!(info.vpn === "N/A")) {
-            return `<a id='copyVPN_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
+            return `<a id='copyVPN_${ran}' class='mt-1 btn py-2 btn-primary' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
         }
         return "<div></div>";
     })();
 
     const copyBtn = (() => {
         if (info.protocol == "https" || info.protocol == "http") {
-            return `<a id='copyNgrok_${ran}' class='mt-1 btn btn-sm btn-primary text-white' role='button' href='${info.ngrok}'>
-            Go to ${info.PCName}</a>`;
+            return `<button id='copyNgrok_${ran}' class='mt-1 btn py-2 btn-primary' role='button' href='${info.ngrok}'>Go to ${info.PCName}</button>`;
         }
         return `
-        <a id='copyNgrok_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copyTunnelAddress(${ran})' role='button' href='#'>Copy ngrok tunnel</a> </br>
-        <a id='copymstsc_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copymstsc(${ran})' role='button' href='#'>MSTSC</a>
+        <a id='copyNgrok_${ran}' class='mt-1 btn py-2 btn-outline-primary' onclick='copyTunnelAddress(${ran})' role='button' href='#'>Copy ngrok tunnel</a> </br>
+        <a id='copymstsc_${ran}' class='mt-1 btn py-2 btn-outline-primary' onclick='copymstsc(${ran})' role='button' href='#'>MSTSC</a>
         `;
     })();
 
@@ -118,7 +117,7 @@ function renderPC(data) {
         var cssClass = (lastReport > 12) ? "alert-danger" : (lastReport > 2) ? "alert-info" : "";
         return (lastReport > 1) ?
             `<div class="alert ${cssClass} fade show" role="alert" >
-            This PC is seen in ${Math.round(lastReport)} hour</div>` : ""
+            This PC last seen in ${Math.round(lastReport)} hour</div>` : ""
     })();
 
     const mainDom = (() => {
@@ -133,11 +132,8 @@ function renderPC(data) {
             ${vpnDom}
             <p class='card-text'> The protocol is: <span id='protocol_${ran}'>${info.protocol}<span> </p>
             <p class='card-text'>Last seen: ${lastSeen} </p>
-            <div>${copyBtn}</div>
-            <div>${vpnBtn}</div>
-            <div>
-                <a class='btn btn-sm btn-danger mt-1 text-white' href='#' role='button' onclick='deletePC("${info.PCName}","${data.id}")'>Delete </a>
-            </div>
+            ${copyBtn}${vpnBtn}
+            <a class='btn btn-outline-danger py-2 mt-1' href='#' role='button' onclick='deletePC("${info.PCName}","${data.id}")'>Delete </a>
         </div>
     </div>
 </div>`;
