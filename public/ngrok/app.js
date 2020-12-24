@@ -83,80 +83,87 @@ function deletePC(pcName, id) {
 }
 
 function renderPC(data) {
-    var info = data.data();
-    var vpnDom = "<div></div>",
-        vpnBtn = "<div></div>",
-        inactiveDom = "";
+    const info = data.data();
 
-    var lastSeen = new Date(info.timestamp.toDate()).toLocaleString();
-    var ran = Math.round(Math.random() * 100132400);
-    if (!(info.vpn === "N/A")) {
-        vpnDom = `<p class='card-text' id='VPN_${ran}'>The vpn is :${info.vpn} </p><input value='${info.vpn}' id='VPNInput_${ran}' style='display:none'>`;
-        vpnBtn = `<a id='copyVPN_${ran}' class='mt-1 btn btn-primary text-white' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
-    }
-    var copyBtn = `
-    <a id='copyNgrok_${ran}' class='mt-1 btn btn-primary text-white' onclick='copyTunnelAddress(${ran})' role='button' href='#'>Copy ngrok tunnel</a> </br>
-    <a id='copymstsc_${ran}' class='mt-1 btn btn-primary text-white' onclick='copymstsc(${ran})' role='button' href='#'>MSTSC</a>
-    `;
-    if (info.protocol == "https" || info.protocol == "http") {
-        copyBtn = `<a id='copyNgrok_${ran}' class='mt-1 btn btn-primary text-white' onclick='copyTunnelAddress(${ran})' role='button' href='${info.ngrok}'>
-        Go to ${info.PCName}</a>`;
-    };
+    const lastSeen = new Date(info.timestamp.toDate()).toLocaleString();
+    const ran = Math.round(Math.random() * 100132400);
 
-    var lastReport = calcMissingHour(info.timestamp);
-    if (lastReport > 12) {
-        inactiveDom = `
-        <div class="alert alert-danger fade show" role="alert" +>
-            Haven't see this PC in ${Math.round(lastReport)} hour
-        </div>
+    const vpnDom = (() => {
+        if (!(info.vpn === "N/A")) {
+            return `<p class='card-text' id='VPN_${ran}'>The vpn is :${info.vpn} </p><input value='${info.vpn}' id='VPNInput_${ran}' style='display:none'>`;
+        }
+        return "<div></div>"
+    })();
+
+    const vpnBtn = (() => {
+        if (!(info.vpn === "N/A")) {
+            return `<a id='copyVPN_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
+        }
+        return "<div></div>";
+    })();
+
+    const copyBtn = (() => {
+        if (info.protocol == "https" || info.protocol == "http") {
+            return `<a id='copyNgrok_${ran}' class='mt-1 btn btn-sm btn-primary text-white' role='button' href='${info.ngrok}'>
+            Go to ${info.PCName}</a>`;
+        }
+        return `
+        <a id='copyNgrok_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copyTunnelAddress(${ran})' role='button' href='#'>Copy ngrok tunnel</a> </br>
+        <a id='copymstsc_${ran}' class='mt-1 btn btn-sm btn-primary text-white' onclick='copymstsc(${ran})' role='button' href='#'>MSTSC</a>
         `;
-    } else if (lastReport > 2) {
-        inactiveDom = `
-        <div class="alert alert-success fade show" role="alert" +>
-            This PC is seen in ${Math.round(lastReport)} hour
-        </div>
-        `;
-    }
+    })();
 
-    var mainDom = `
-    <div class='p-2 col-lg-3'>
-        <div class='card ' id='div_${ran}'>
-            <div class='card-body'>
-                <h5 class='card-title' ">${info.PCName}<h5>
-                ${inactiveDom}
-                <p class='card-text' id='ngrokID_${ran}'>${info.ngrok}</p>
-                <input value='${info.ngrok}' id='ngrokInput_${ran}' style='display:none'>
-                ${vpnDom}
-                <p class='card-text' >The protocol is: <span id='protocol_${ran}'>${info.protocol}<span> </p>
-                <p class='card-text'>Last seen: ${lastSeen} </p>
-                <div>${copyBtn}</div>
-                <div>${vpnBtn}</div>
-                <div><a class='btn btn-danger mt-1 text-white' href='#' role='button' onclick='deletePC("${info.PCName}","${data.id}")'>Delete </a></div>
+    const inactiveDom = (() => {
+        var lastReport = calcMissingHour(info.timestamp);
+        var cssClass = (lastReport > 12) ? "alert-danger" : (lastReport > 2) ? "alert-info" : "";
+        return (lastReport > 1) ?
+            `<div class="alert ${cssClass} fade show" role="alert" >
+            This PC is seen in ${Math.round(lastReport)} hour</div>` : ""
+    })();
+
+    const mainDom = (() => {
+        return `
+<div class='p-2 col-lg-3'>
+    <div class='card ' id='div_${ran}'>
+        <div class='card-body'>
+            <h5 class='card-title' ">${info.PCName}<h5>
+            ${inactiveDom}
+            <p class='card-text' id='ngrokID_${ran}'>${info.ngrok}</p>
+            <input value='${info.ngrok}' id='ngrokInput_${ran}' style='display:none'>
+            ${vpnDom}
+            <p class='card-text'> The protocol is: <span id='protocol_${ran}'>${info.protocol}<span> </p>
+            <p class='card-text'>Last seen: ${lastSeen} </p>
+            <div>${copyBtn}</div>
+            <div>${vpnBtn}</div>
+            <div>
+                <a class='btn btn-sm btn-danger mt-1 text-white' href='#' role='button' onclick='deletePC("${info.PCName}","${data.id}")'>Delete </a>
             </div>
         </div>
     </div>
-    `;
+</div>`;
+    })();
 
     $("#ngrokContainer").append(mainDom);
 }
 
-function renderNoRight() {
-    var dom = `<div class='p-2 col-lg-6 mx-auto'>
-        <div class='card text-center py-5'>
-            <div class='card-body'>
-                <h5 class='card-title text-danger'> You have no right to view this page <h5>
-                <p class='card-text'> 403 </p>
-            </div>
+function renderDevelopment() {
+    var dom = `
+<div class='p-2 col-lg-6 mx-auto'>
+    <div class='card text-center py-5'>
+        <div class='card-body'>
+            <h5 class='card-title text-danger'> You have no right to view this page <h5>
+            <p class='card-text'> 403 </p>
         </div>
-    </div>`;
+    </div>
+</div>`;
     $("#ngrokContainer").append(dom);
 }
 
 function calcMissingHour(time) {
     const date1 = new Date(time.toDate())
     const date2 = new Date()
-    var DIffInTime = date2.getTime() - date1.getTime();
-    var DiffInHour = DIffInTime / (1000 * 3600);
+    const DIffInTime = date2.getTime() - date1.getTime();
+    const DiffInHour = DIffInTime / (1000 * 3600);
     return DiffInHour;
 }
 
@@ -171,6 +178,6 @@ firebase.auth().onAuthStateChanged(function(user) {
                 });
             });
     } else {
-        renderNoRight();
+        renderDevelopment();
     }
 });
