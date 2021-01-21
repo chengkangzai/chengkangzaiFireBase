@@ -1,16 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
-import {AuthGuard} from "../services/auth-guard.service";
 
 const routes: Routes = [
     {
-        path: 'tabs',
+        path: '',
         component: TabsPage,
         children: [
             {
                 path: 'ngrok',
-                canLoad: [AuthGuard],
                 loadChildren: () => import('../ngrok/ngrok.module').then(m => m.Tab1PageModule)
             },
             {

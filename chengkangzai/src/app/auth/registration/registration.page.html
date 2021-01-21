@@ -1,0 +1,52 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+        </ion-buttons>
+        <ion-title>Register </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-md="6" offset-md="3">
+                <form [formGroup]="form" (ngSubmit)="signUp()">
+                    <ion-item lines="full">
+                        <ion-label position="floating">Email</ion-label>
+                        <ion-input type="email" formControlName="email" id="email" required=""></ion-input>
+                    </ion-item>
+                    <div class="ion-text-center ion-padding-horizontal"
+                         *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">
+                        <ion-label *ngIf="form.get('email').hasError('required')">
+                            Hey Email is required !
+                        </ion-label>
+                        <ion-label *ngIf="form.get('email').hasError('email')">
+                            Email is in wrong format :3
+                        </ion-label>
+                    </div>
+
+                    <ion-item lines="full">
+                        <ion-label position="floating">Password</ion-label>
+                        <ion-input type="password" formControlName="password"></ion-input>
+                    </ion-item>
+                    <div class="ion-text-center ion-padding-horizontal"
+                         *ngIf="form.get('password').invalid && (form.get('password').dirty || form.get('password').touched)">
+                        <ion-label *ngIf="form.get('password').hasError('required')">
+                            Password is required
+                        </ion-label>
+                        <ion-label *ngIf="form.get('password').hasError('minlength')">
+                            Password is too short
+                        </ion-label>
+                    </div>
+
+
+                    <input type="submit" hidden>
+                    <ion-button role="button" type="submit" expand="block" [disabled]="form.invalid">Register
+                    </ion-button>
+                    <ion-button type="button" expand="block" routerLink="/login">Switch to login</ion-button>
+
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
