@@ -1,23 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MorePage } from './more.page';
+import {MorePage} from './more.page';
 
 describe('Tab2Page', () => {
-  let component: MorePage;
-  let fixture: ComponentFixture<MorePage>;
+    let component: MorePage;
+    let fixture: ComponentFixture<MorePage>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MorePage],
-      imports: []
-    }).compileComponents();
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [MorePage],
+            imports: []
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(MorePage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+        fixture = TestBed.createComponent(MorePage);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
