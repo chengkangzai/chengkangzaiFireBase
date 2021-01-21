@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NgrokPage} from './ngrok.component';
+import {NgrokPage} from './ngrok.page';
 
 describe('Tab1Page', () => {
     let component: NgrokPage;

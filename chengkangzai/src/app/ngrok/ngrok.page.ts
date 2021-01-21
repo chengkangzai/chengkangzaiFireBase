@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-ngrok',
-    templateUrl: 'ngrok.component.html',
-    styleUrls: ['ngrok.component.scss']
+    templateUrl: 'ngrok.page.html',
+    styleUrls: ['ngrok.page.scss']
 })
 export class NgrokPage {
 
