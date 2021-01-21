@@ -1,4 +1,4 @@
-var navDom =
+const navDom =
     `
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="background-color:#131313 !important">
     <a class="navbar-brand" href="#">Cheng Kang</a>

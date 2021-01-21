@@ -1,6 +1,6 @@
 function submitFeedback() {
-    var feedback = $("#feedbackValue");
-    var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    const feedback = $("#feedbackValue");
+    const timestamp = firebase.firestore.Timestamp.fromDate(new Date());
 
     // Add a new document in collection "cities"
     db.collection("feedback").add({
@@ -19,7 +19,7 @@ function submitFeedback() {
 }
 
 function checkIfIsEnter(event) {
-    if (event.keyCode == 13) submitFeedback()
+    if (event.keyCode === 13) submitFeedback()
 }
 
 db.collection("feedback")

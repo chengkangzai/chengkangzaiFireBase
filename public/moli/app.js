@@ -1,26 +1,26 @@
-var imageUrl = null;
-$("#fileInput").change(function(e) {
+let imageUrl = null;
+$("#fileInput").change(function (e) {
     e.preventDefault();
-    var fileBtn = $("#fileInput");
+    const fileBtn = $("#fileInput");
 
-    var file = e.target.files[0];
-    var storageRef = firebase.storage().ref(`moli/pic/${file.name}`);
+    const file = e.target.files[0];
+    const storageRef = firebase.storage().ref(`moli/pic/${file.name}`);
 
-    var task = storageRef.put(file);
+    const task = storageRef.put(file);
 
     task.on('state_changed',
         function progress(snapshot) {
-            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload Progress is " + percentage);
+            const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // console.log("Upload Progress is " + percentage);
         },
         function error(error) {
-            console.log(error)
+            // console.log(error)
             fileBtn.removeClass("is-valid").addClass("is-invalid");
         },
         function complete() {
             fileBtn.removeClass("is-invalid").addClass("is-valid");
             task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                console.log('File available at', downloadURL);
+                // console.log('File available at', downloadURL);
                 imageUrl = downloadURL;
                 $("#fileInputLabel").text(file.name);
                 $("#addRoleSaveBtn").removeAttr("disabled").removeClass("btn-secondary").addClass("btn-primary");
@@ -31,31 +31,27 @@ $("#fileInput").change(function(e) {
 $("#addRoleSaveBtn").click((e) => {
     e.preventDefault();
 
-    var name = $("#nameInput");
-    var level = $("#levelInput");
+    const name = $("#nameInput");
+    const level = $("#levelInput");
+    const fileInput = $("#fileInput");
 
     if (validation()) {
-        console.log("validation pass")
         addToFirebase();
     }
 
     function validation() {
-        (name.val()) ? name.removeClass("is-invalid").addClass("is-valid"):
+        (name.val()) ? name.removeClass("is-invalid").addClass("is-valid") :
             name.removeClass("is-valid").addClass("is-invalid");
-        (level.val()) ? level.removeClass("is-invalid").addClass("is-valid"):
+        (level.val()) ? level.removeClass("is-invalid").addClass("is-valid") :
             level.removeClass("is-valid").addClass("is-invalid");
-        (imageUrl) ? $("#fileInput").removeClass("is-invalid").addClass("is-valid"):
-            $("#fileInput").removeClass("is-valid").addClass("is-invalid");
+        (imageUrl) ? fileInput.removeClass("is-invalid").addClass("is-valid") :
+            fileInput.removeClass("is-valid").addClass("is-invalid");
 
-        if (name.val() && level.val() && imageUrl) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!(name.val() && level.val() && imageUrl);
     }
 
     function addToFirebase() {
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function (user) {
             db
                 .collection(`moli/${user.uid}/player`)
                 .add({
@@ -67,16 +63,13 @@ $("#addRoleSaveBtn").click((e) => {
                 .then(response => {
                     console.log(response);
                 })
-                .catch(error => {
-                    console.log(error);
-                });
         });
     }
 });
 
 function objectLength(object) {
-    var length = 0;
-    for (var key in object) {
+    let length = 0;
+    for (let key in object) {
         if (object.hasOwnProperty(key)) {
             ++length;
         }
@@ -85,17 +78,18 @@ function objectLength(object) {
 };
 
 function renderPlayer(doc) {
-    var id = doc.id;
+    const id = doc.id;
     const data = doc.data();
 
-    var materialListHead = `<thead class="thead-light"><tr><td>名字</td><td>已有材料</td><td>需求材料</td></tr></thead>`;
+    let materialListHead = `<thead class="thead-light"><tr><td>名字</td><td>已有材料</td><td>需求材料</td></tr></thead>`;
 
-    var materialList = [];
-    var progressBar = [];
-    var tempest = [];
+    let materialList = [];
+    let progressBar = [];
+    let tempest = [];
     if (objectLength(data.material) >= 1) {
         data.material.forEach(element => {
             function calcWhiteBase(num, color) {
+                let whiteBase = 0;
                 switch (color) {
                     case "white":
                         whiteBase = num;
@@ -116,16 +110,16 @@ function renderPlayer(doc) {
                 return whiteBase;
             }
 
-            var name = element.name;
-            var haveColor = element.have.color;
-            var haveNumber = element.have.number;
-            var wantedColor = element.wanted.color;
-            var wantedNumber = element.wanted.number;
+            const name = element.name;
+            const haveColor = element.have.color;
+            const haveNumber = element.have.number;
+            const wantedColor = element.wanted.color;
+            const wantedNumber = element.wanted.number;
 
-            var haveWhite = calcWhiteBase(haveNumber, haveColor);
-            var wantedWhite = calcWhiteBase(wantedNumber, wantedColor);
+            const haveWhite = calcWhiteBase(haveNumber, haveColor);
+            const wantedWhite = calcWhiteBase(wantedNumber, wantedColor);
 
-            var percentage = (haveWhite / wantedWhite) * 100;
+            const percentage = (haveWhite / wantedWhite) * 100;
             if (percentage >= 100) {
                 progressBar.push(`                    
                     <div class="progress m-2">
@@ -157,7 +151,7 @@ function renderPlayer(doc) {
         materialListHead = "";
     }
 
-    var modalForAdd = `
+    const modalForAdd = `
     <div class="modal fade" id="addMaterialForm${id}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -213,7 +207,7 @@ function renderPlayer(doc) {
     </div>
     `;
 
-    var modalForDelete = `
+    const modalForDelete = `
     <div class="modal fade" id="deleteMaterialForm${id}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -237,7 +231,7 @@ function renderPlayer(doc) {
 </div>
     `;
 
-    var dom = `
+    const dom = `
     <div class="card m-1 col-lg-3" style="height:100%">
         <img class="card-img-top" src="${data.picUrl}" alt="Card image cap">
         <div class="card-body">
@@ -270,7 +264,7 @@ function updateMaterial(docID) {
     const haveNumber = $(`#haveNumberInput${docID}`);
     const wantedColor = $(`#wantedColorType${docID} :selected`);
     const wantedNumber = $(`#wantedNumberInput${docID}`);
-    var temp = [];
+    let temp = [];
 
 
     if (validation()) {
@@ -279,22 +273,22 @@ function updateMaterial(docID) {
 
     function validation() {
         (haveNumber.val()) ?
-        haveNumber.removeClass("is-invalid").addClass("is-valid"):
+            haveNumber.removeClass("is-invalid").addClass("is-valid") :
             haveNumber.removeClass("is-valid").addClass("is-invalid");
         (wantedNumber.val()) ?
-        wantedNumber.removeClass("is-invalid").addClass("is-valid"):
+            wantedNumber.removeClass("is-invalid").addClass("is-valid") :
             wantedNumber.removeClass("is-valid").addClass("is-invalid");
 
         (name.attr("hidden")) ?
-        name.parent().parent().removeClass("is-valid").addClass("is-invalid"):
+            name.parent().parent().removeClass("is-valid").addClass("is-invalid") :
             name.parent().parent().removeClass("is-invalid").addClass("is-valid");
 
         (haveColor.attr("hidden")) ?
-        haveColor.parent().removeClass("is-valid").addClass("is-invalid"):
+            haveColor.parent().removeClass("is-valid").addClass("is-invalid") :
             haveColor.parent().removeClass("is-invalid").addClass("is-valid");
 
         (wantedColor.attr("hidden")) ?
-        wantedColor.parent().removeClass("is-valid").addClass("is-invalid"):
+            wantedColor.parent().removeClass("is-valid").addClass("is-invalid") :
             wantedColor.parent().removeClass("is-invalid").addClass("is-valid");
 
         if (haveNumber.val() && wantedNumber.val()) {
@@ -306,15 +300,15 @@ function updateMaterial(docID) {
     }
 
     function prepare() {
-        firebase.auth().onAuthStateChanged(function(user) {
+        firebase.auth().onAuthStateChanged(function (user) {
             db
                 .doc(`moli/${user.uid}/player/${docID}`)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                     temp = doc.data().material;
                     console.log(temp);
                     for (let i = 0; i < temp.length; i++) {
-                        if (temp[i].name == name.val()) {
+                        if (temp[i].name === name.val()) {
                             temp.splice(i, 1);
                             // console.log(temp[i]);
                         }
@@ -335,32 +329,26 @@ function updateMaterial(docID) {
                         .update({
                             material: temp
                         })
-                        .then(function(doc) {
+                        .then(function (doc) {
                             $(`.modal-backdrop`).hide()
                         })
-                        .catch(function(error) {
-                            console.log(error)
-                        })
-                })
-                .catch(function(error) {
-                    console.log(error);
                 })
         });
     }
 }
 
 function deleteMaterial(docID) {
-    var name = $(`#materialToDelete${docID} :selected`);
+    const name = $(`#materialToDelete${docID} :selected`);
 
     if (name.attr("hidden")) {
         name.parent().removeClass("is-valid").addClass("is-invalid");
     } else {
-        var temp;
-        firebase.auth().onAuthStateChanged(function(user) {
+        let temp;
+        firebase.auth().onAuthStateChanged(function (user) {
             db
                 .doc(`moli/${user.uid}/player/${docID}`)
                 .get()
-                .then(function(doc) {
+                .then(function (doc) {
                     temp = doc.data().material;
                     for (let i = 0; i < temp.length; i++) {
                         if (temp[i].name == name.val()) {
@@ -372,22 +360,16 @@ function deleteMaterial(docID) {
                         .update({
                             material: temp
                         })
-                        .then(function(doc) {
+                        .then((doc) => {
                             $(`.modal-backdrop`).hide()
                         })
-                        .catch(function(error) {
-                            console.log(error)
-                        })
-                })
-                .catch(function(error) {
-                    console.log(error);
                 })
         });
     }
 }
 
 firebase.auth().onAuthStateChanged(user => {
-    (user) ? $("#welcomerText").text(`Hello ! ${user.displayName}`): window.location.href = "../index.html"
+    (user) ? $("#welcomerText").text(`Hello ! ${user.displayName}`) : window.location.href = "../index.html"
     db
         .collection(`moli/${user.uid}/player`)
         .onSnapshot(snap => {
@@ -398,7 +380,4 @@ firebase.auth().onAuthStateChanged(user => {
         })
 });
 
-$(document).on('load', function() {
-
-    $("#navBar").load("nav.html");
-});
+$(document).on('load', () => $("#navBar").load("nav.html"));
