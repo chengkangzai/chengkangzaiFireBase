@@ -1,7 +1,7 @@
 function resetCopyBtn(id) {
-    var vpnBtn = $(`#copyVPN_${id}`);
-    var mstscBtn = $(`#copymstsc_${id}`);
-    var tunnelBtn = $(`#copyNgrok_${id}`);
+    const vpnBtn = $(`#copyVPN_${id}`);
+    const mstscBtn = $(`#copymstsc_${id}`);
+    const tunnelBtn = $(`#copyNgrok_${id}`);
 
     if (vpnBtn.hasClass("btn-info")) {
         vpnBtn.removeClass("btn-info").addClass("btn-primary");
@@ -15,18 +15,19 @@ function resetCopyBtn(id) {
 }
 
 function copyTunnelAddress(id) {
-    var ngrok = $(`#ngrokID_${id}`).text();
-    ngrok = ngrok.split('://');
+    const ngrokInput = $(`#ngrokInput_${id}`);
+    const ngrok = $(`#ngrokID_${id}`).text().split('://');
+
     document.getElementById(`ngrokInput_${id}`).value = ngrok[1];
-    $(`#ngrokInput_${id}`).show();
-    var copyText = document.getElementById(`ngrokInput_${id}`);
+    ngrokInput.show();
+    const copyText = document.getElementById(`ngrokInput_${id}`);
 
     copyText.select();
     copyText.setSelectionRange(0, 99999);
 
     document.execCommand("copy");
 
-    $(`#ngrokInput_${id}`).hide();
+    ngrokInput.hide();
     resetCopyBtn(id)
     $(`#copyNgrok_${id}`).removeClass("btn-primary").addClass("btn-info");
 
@@ -34,26 +35,28 @@ function copyTunnelAddress(id) {
 
 
 function copymstsc(id) {
-    var ngrok = $(`#ngrokID_${id}`).text();
-    ngrok = ngrok.split('://');
+    const ngrokInput = $(`#ngrokInput_${id}`);
+    const ngrok = $(`#ngrokID_${id}`).text().split('://');
+
     document.getElementById(`ngrokInput_${id}`).value = "mstsc -v " + ngrok[1];
-    $(`#ngrokInput_${id}`).show();
-    var copyText = document.getElementById(`ngrokInput_${id}`);
+    ngrokInput.show();
+    const copyText = document.getElementById(`ngrokInput_${id}`);
 
     copyText.select();
     copyText.setSelectionRange(0, 99999);
 
     document.execCommand("copy");
 
-    $(`#ngrokInput_${id}`).hide();
+    ngrokInput.hide();
     resetCopyBtn(id)
     $(`#copymstsc_${id}`).removeClass("btn-primary").addClass("btn-info");
 
 }
 
 function copyVPNAddress(id) {
+    const ngrokInput = $(`#ngrokInput_${id}`);
     $(`#VPNInput_${id}`).show();
-    var copyText = document.getElementById(`VPNInput_${id}`);
+    const copyText = document.getElementById(`VPNInput_${id}`);
 
     copyText.select();
     copyText.setSelectionRange(0, 99999);
@@ -67,17 +70,13 @@ function copyVPNAddress(id) {
 }
 
 function deletePC(pcName, id) {
-    var res = confirm(`Are you sure you want to delete ${pcName}?`);
-    if (res == true) {
+    const res = confirm(`Are you sure you want to delete ${pcName}?`);
+    if (res === true) {
         db
             .doc(`ngrok/${id}`)
             .delete()
             .then((doc) => {
                 $(`#div_${id}`).hide();
-            })
-            .catch((error) => {
-                $(`#div_${id}`).hide();
-                console.log(error)
             })
     }
 }
@@ -103,7 +102,7 @@ function renderPC(data) {
     })();
 
     const copyBtn = (() => {
-        if (info.protocol == "https" || info.protocol == "http") {
+        if (info.protocol === "https" || info.protocol === "http") {
             return `<button id='copyNgrok_${ran}' class='mt-1 btn py-2 btn-primary' role='button' href='${info.ngrok}'>Go to ${info.PCName}</button>`;
         }
         return `
@@ -113,8 +112,8 @@ function renderPC(data) {
     })();
 
     const inactiveDom = (() => {
-        var lastReport = calcMissingHour(info.timestamp);
-        var cssClass = (lastReport > 12) ? "alert-danger" : (lastReport > 2) ? "alert-info" : "";
+        const lastReport = calcMissingHour(info.timestamp);
+        const cssClass = (lastReport > 12) ? "alert-danger" : (lastReport > 2) ? "alert-info" : "";
         return (lastReport > 1) ?
             `<div class="alert ${cssClass} fade show" role="alert" >
             This PC last seen in ${Math.round(lastReport)} hour</div>` : ""
@@ -143,7 +142,7 @@ function renderPC(data) {
 }
 
 function renderDevelopment() {
-    var dom = `
+    const dom = `
 <div class='p-2 col-lg-6 mx-auto'>
     <div class='card text-center py-5'>
         <div class='card-body'>
@@ -163,13 +162,16 @@ function calcMissingHour(time) {
     return DiffInHour;
 }
 
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user.email == "pycck@hotmail.com" || user.email == "kangkangge.ge@gmail.com") {
+firebase.auth().onAuthStateChanged(function (user) {
+    if (!user) {
+        window.location.href = "../index.html";
+    }
+    if (user.email === "pycck@hotmail.com" || user.email === "kangkangge.ge@gmail.com") {
         db
             .collection("ngrok")
-            .onSnapshot(function(snap) {
+            .onSnapshot(function (snap) {
                 $("#ngrokContainer").replaceWith("<div class='row m-0' id='ngrokContainer'></div>");
-                snap.forEach(function(doc) {
+                snap.forEach(function (doc) {
                     renderPC(doc);
                 });
             });

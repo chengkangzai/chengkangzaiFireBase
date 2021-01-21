@@ -1,5 +1,5 @@
 function particleJS() {
-    var particleJsConfig = {
+    const particleJsConfig = {
         "particles": {
             "number": {
                 "value": 10,

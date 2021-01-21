@@ -12,7 +12,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
         })
     }
 
-    var unitInfo = {
+    const unitInfo = {
         unitNumber: req.body.unitNumber || "N/A",
         ssid: req.body.ssid || "N/A",
         wifiPass: req.body.wifiPass || "N/A",
@@ -27,16 +27,34 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
 
     function validate() {
         verifyToken()
-        var error = [];
-        if (unitInfo.unitNumber === "N/A") { error.push("unitNumber cannot be empty") }
-        if (unitInfo.ssid === "N/A") { error.push("ssid cannot be empty") }
-        if (unitInfo.wifiPass === "N/A") { error.push("wifiPass cannot be empty") }
-        if (unitInfo.PPPoeUserName === "N/A") { error.push("PPPoeUserName cannot be empty") }
-        if (unitInfo.PPPoePassword === "N/A") { error.push("PPPoePassword cannot be empty") }
-        if (unitInfo.routerModel === "N/A") { error.push("routerModel cannot be empty") }
-        if (unitInfo.routerSN === "N/A") { error.push("routerSN cannot be empty") }
-        if (unitInfo.routerMac === "N/A") { error.push("routerMac cannot be empty") }
-        if (unitInfo.routerPass === "N/A") { error.push("routerPass cannot be empty") }
+        let error = [];
+        if (unitInfo.unitNumber === "N/A") {
+            error.push("unitNumber cannot be empty")
+        }
+        if (unitInfo.ssid === "N/A") {
+            error.push("ssid cannot be empty")
+        }
+        if (unitInfo.wifiPass === "N/A") {
+            error.push("wifiPass cannot be empty")
+        }
+        if (unitInfo.PPPoeUserName === "N/A") {
+            error.push("PPPoeUserName cannot be empty")
+        }
+        if (unitInfo.PPPoePassword === "N/A") {
+            error.push("PPPoePassword cannot be empty")
+        }
+        if (unitInfo.routerModel === "N/A") {
+            error.push("routerModel cannot be empty")
+        }
+        if (unitInfo.routerSN === "N/A") {
+            error.push("routerSN cannot be empty")
+        }
+        if (unitInfo.routerMac === "N/A") {
+            error.push("routerMac cannot be empty")
+        }
+        if (unitInfo.routerPass === "N/A") {
+            error.push("routerPass cannot be empty")
+        }
         if (error.length >= 1) {
             res.send({
                 status: 400,
@@ -49,7 +67,6 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
     validate();
 
     function addUnit() {
-        console.log("Adding");
         db
             .collection("AccomUnit")
             .add(unitInfo)
@@ -94,7 +111,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
     }
 
     function verifyToken() {
-        token = req.body.token || "N/A"
+        const token = req.body.token || "N/A"
         if (token === "N/A") {
             res.send({
                 status: 403,
@@ -106,9 +123,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
             .where('token', "==", token)
             .get()
             .then(snap => {
-                if (!snap.empty) {
-                    return true;
-                }
+                return !snap.empty;
             })
             .catch(error => {
                 res.status(500).send(error)
@@ -153,7 +168,7 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
         });
     }
 
-    var ngrokStatus = {
+    const ngrokStatus = {
         PCName: req.body.pcName || "N/A",
         vpn: req.body.vpnIP || "N/A",
         ngrok: req.body.ngrok || "N/A",
@@ -162,13 +177,12 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
     }
 
     function validation() {
-        var message = [];
+        let message = [];
         if (ngrokStatus.PCName === "N/A") message.push("PCName should not be empty!")
         if (ngrokStatus.ngrok === "N/A") message.push("ngrok should not be empty!")
         if (ngrokStatus.protocol === "N/A") message.push("protocol should not be empty!")
-
         if (!(message.length === 0)) {
-            res.send({ message });
+            res.send({message});
             process.exit();
         }
         return true;
@@ -216,7 +230,7 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
         .where('PCName', "==", ngrokStatus.PCName)
         .get()
         .then(snap => {
-            var docId;
+            let docId;
             if (snap.empty) {
                 addPC();
             } else {
@@ -225,6 +239,7 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
                 });
                 updatePC(docId)
             }
+            return true;
         })
         .catch();
 })
@@ -237,14 +252,14 @@ exports.login = functions.https.onRequest((req, res) => {
             message: "Method not Allow"
         });
     }
-    var data = {
+    const data = {
         email: req.body.email || "N/A",
         password: req.body.password || "N/A",
         unit: req.body.unit || "N/A",
     }
 
     function validation() {
-        var message = [];
+        let message = [];
         if (data.email === "N/A") message.push("Email Cannot be empty");
         if (data.password === "N/A") message.push("Password Cannot be empty");
         if (data.unit === "N/A") message.push("Unit Cannot be empty");
