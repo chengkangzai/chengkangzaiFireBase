@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../services/authentication-service.service";
 
 @Component({
     selector: 'app-more',
@@ -7,7 +9,13 @@ import {Component} from '@angular/core';
 })
 export class MorePage {
 
-    constructor() {
+    constructor(
+        private router: Router,
+        private authService: AuthenticationService,
+    ) {
     }
 
+    Logout() {
+        this.authService.SignOut().then(() => this.router.navigateByUrl('/login'))
+    }
 }

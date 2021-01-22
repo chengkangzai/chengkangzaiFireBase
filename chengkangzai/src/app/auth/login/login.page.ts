@@ -10,9 +10,8 @@ import {AlertController, LoadingController} from "@ionic/angular";
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
 })
-
 export class LoginPage implements OnInit {
-//Check if user is logged in
+    // Check if user is logged in
     form: FormGroup;
     email: string;
 
@@ -27,14 +26,14 @@ export class LoginPage implements OnInit {
     ngOnInit() {
         this.form = new FormGroup({
             email: new FormControl(null, {
-                updateOn: 'change',
+                updateOn: 'blur',
                 validators: [Validators.required, Validators.email]
             }),
             password: new FormControl(null, {
-                updateOn: 'change',
+                updateOn: 'blur',
                 validators: [Validators.required, Validators.minLength(8)]
-            })
-        })
+            }),
+        });
     }
 
     async logIn() {
@@ -46,22 +45,22 @@ export class LoginPage implements OnInit {
                     text: 'Okay',
                     role: 'cancel'
                 }]
-            })
+            });
             return await alert.present();
         }
 
         const loading = await this.loadingController.create({
-            message: 'Hold on... '
-        })
+            message: 'Hold on... ',
+            duration: 50000
+        });
         await loading.present();
 
         this.authService.SignIn(this.form.value.email, this.form.value.password)
-            .then(async (res) => {
+            .then(async res => {
                 //TODO
                 await this.router.navigateByUrl('tabs/ngrok');
             })
-            .catch(async (error) => {
-                console.log(error)
+            .catch(async error => {
                 if (error.code === "auth/user-not-found") {
                     const alert = await this.alertController.create({
                         header: 'Information',
@@ -89,8 +88,12 @@ export class LoginPage implements OnInit {
                     })
                     await alert.present();
                 }
-                await loading.dismiss();
-            })
+
+            }).finally(async () => await loading.dismiss())
+
     }
 
+    async LoginWithGoogle() {
+        await this.authService.GoogleAuth()
+    }
 }

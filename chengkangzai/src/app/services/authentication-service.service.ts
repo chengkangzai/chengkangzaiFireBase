@@ -7,6 +7,7 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import firebase from "firebase";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import AuthProvider = firebase.auth.AuthProvider;
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 export class AuthenticationService {
     userData: any;
-//https://github.com/angular/angularfire/issues/2409
+
+    // https://github.com/angular/angularfire/issues/2409
     constructor(
         public afStore: AngularFirestore,
         public ngFireAuth: AngularFireAuth,
@@ -71,11 +73,11 @@ export class AuthenticationService {
     }
 
     // Auth providers
-    AuthLogin(provider) {
+    AuthLogin(provider: AuthProvider): Promise<any> {
         return this.ngFireAuth.signInWithPopup(provider)
             .then((result) => {
                 this.ngZone.run(() => {
-                    this.router.navigate(['dashboard']);
+                    this.router.navigate(['tabs/ngrok']);
                 })
                 this.SetUserData(result.user);
             }).catch((error) => {

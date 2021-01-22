@@ -69,7 +69,7 @@ export class RegistrationPage implements OnInit {
                     }]
                 })
                 await alert.present();
-            })
-        await loading.dismiss();
+            }).finally(async () => await loading.dismiss())
+
     }
 }

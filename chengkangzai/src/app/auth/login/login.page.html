@@ -38,12 +38,16 @@
                             Password is too short
                         </ion-label>
                     </div>
-                    <input type="submit" hidden>
                     <ion-button type="submit" expand="block" [disabled]="form.invalid">Login</ion-button>
-                    <ion-button type="button" expand="block" class="ionb" routerLink="/registration">Switch to
+                    <input type="submit" hidden>
+                </form>
+                    <ion-button type="submit" expand="block" (click)="LoginWithGoogle()" fill="outline">
+                        <ion-icon slot="start" name="logo-google"></ion-icon>
+                        Login With google
+                    </ion-button>
+                    <ion-button type="button" expand="block" routerLink="/registration">Switch to
                         Register
                     </ion-button>
-                </form>
             </ion-col>
         </ion-row>
     </ion-grid>
