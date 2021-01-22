@@ -12,10 +12,12 @@
             <ion-col size-md="6" offset-md="3" class="ion-color-light">
                 <ion-card color="medium">
                     <ion-card-content>
-                        <ngx-auth-firebaseui [guestEnabled]="false" [providers]="providers.Google" (onSuccess)="onSuccess($event) "></ngx-auth-firebaseui>
+                        <ngx-auth-firebaseui [guestEnabled]="false" [providers]="providers.EmailAndPassword">
+                        </ngx-auth-firebaseui>
+                        <ngx-auth-firebaseui-providers [providers]="providers.Google" *ngIf="!isPhone">
+                        </ngx-auth-firebaseui-providers>
                     </ion-card-content>
                 </ion-card>
-
             </ion-col>
         </ion-row>
     </ion-grid>
