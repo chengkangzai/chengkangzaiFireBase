@@ -1,0 +1,7 @@
+{
+  "name": "chengkangzai",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
