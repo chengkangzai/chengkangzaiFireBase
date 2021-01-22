@@ -10,9 +10,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
-import { AngularFireAuthModule} from "@angular/fire/auth";
+import {AngularFireAuthModule} from "@angular/fire/auth";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
+import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,7 +27,20 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         AngularFirestoreModule,
+        NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'chengkangzai', {
+            enableFirestoreSync: true, // enable/disable autosync users with firestore
+            authGuardFallbackURL: '/login', // url for unauthenticated users - to use in combination with canActivate feature on a route
+            authGuardLoggedInURL: '/tabs/ngrok', // url for authenticated users - to use in combination with canActivate feature on a route
+            passwordMinLength: 8, // Password length min/max in forms independently of each componenet min/max.
+            // Same as password but for the name
+            nameMaxLength: 50,
+            nameMinLength: 2,
+            enableEmailVerification: false,
+            guardProtectedRoutesUntilEmailIsVerified:false,
+        }),
+        BrowserAnimationsModule
     ],
+
     providers: [
         StatusBar,
         SplashScreen,

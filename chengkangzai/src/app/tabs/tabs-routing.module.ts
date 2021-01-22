@@ -1,15 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
-import {AngularFireAuthGuard, redirectUnauthorizedTo} from "@angular/fire/auth-guard";
+import {LoggedInGuard} from "ngx-auth-firebaseui";
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const routes: Routes = [
     {
         path: '',
         component: TabsPage,
-        canActivate: [AngularFireAuthGuard],
-        data: {authGuardPipe: redirectUnauthorizedToLogin},
+        canActivate: [LoggedInGuard],
         children: [
             {
                 path: 'ngrok',
