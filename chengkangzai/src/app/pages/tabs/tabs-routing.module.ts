@@ -1,17 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
-import {LoggedInGuard} from "ngx-auth-firebaseui";
 
 const routes: Routes = [
     {
         path: '',
         component: TabsPage,
-        canActivate: [LoggedInGuard],
         children: [
             {
                 path: 'ngrok',
-                loadChildren: () => import('../ngrok/ngrok.module').then(m => m.Tab1PageModule)
+                loadChildren: () => import('../ngrok/ngrok.module').then(m => m.NgrokPageModule)
             },
             {
                 path: 'more',
@@ -21,7 +19,10 @@ const routes: Routes = [
                 path: '',
                 redirectTo: '/tabs/ngrok',
                 pathMatch: 'full'
-            }
+            }, {
+                path: 'feedback',
+                loadChildren: () => import('../feedback/feedback.module').then(m => m.FeedbackPageModule)
+            },
         ]
     },
     {

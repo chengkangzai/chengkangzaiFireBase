@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {LoggedInGuard} from "ngx-auth-firebaseui";
 
 const routes: Routes = [
     {
@@ -9,6 +10,7 @@ const routes: Routes = [
     },
     {
         path: 'tabs',
+        canActivate: [LoggedInGuard],
         loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
     },
     {
