@@ -3,6 +3,7 @@ import {NgrokInterface, NgrokService} from "../services/ngrok.service";
 import {Subscription} from "rxjs";
 import {AlertController, IonButton, ToastController} from "@ionic/angular";
 import {Ngrok} from "../model/ngrok";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-ngrok',
@@ -13,20 +14,25 @@ export class NgrokPage implements OnInit, OnDestroy {
 
     ngrok: NgrokInterface[] = [];
     ngrokSub: Subscription;
+    isLoading = true;
 
     constructor(
         public ngrokService: NgrokService,
         private toaster: ToastController,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private router: Router
     ) {
     }
 
     ngOnInit() {
+        this.isLoading = true
         this.ngrokSub = this.ngrokService.ngrok
             .subscribe((ngrok) => {
                 this.ngrok = ngrok;
             })
-        this.ngrokService.fetch().subscribe();
+        this.ngrokService.fetch().subscribe(() => {
+            this.isLoading = false;
+        });
     }
 
     ngOnDestroy() {
@@ -69,5 +75,9 @@ export class NgrokPage implements OnInit, OnDestroy {
         this.ngrokService.fetch().subscribe(() => {
             event.target.complete();
         });
+    }
+
+    async onSignOut() {
+        await this.router.navigateByUrl('login');
     }
 }

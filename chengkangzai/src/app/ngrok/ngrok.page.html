@@ -4,7 +4,8 @@
             Ngrok status :3
         </ion-title>
 
-        <ngx-auth-firebaseui-avatar slot="end"></ngx-auth-firebaseui-avatar>
+        <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
+                                    (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
 
     </ion-toolbar>
 </ion-header>
@@ -16,7 +17,15 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-grid *ngIf="!ngrok || ngrok.length <=0" class="ion-text-center" id="horizontalCenterContainer" >
+    <ion-grid *ngIf="isLoading " class="ion-text-center horizontalCenterContainer">
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <ion-spinner></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="!isLoading && (!ngrok || ngrok.length <=0)" class="ion-text-center horizontalCenterContainer">
         <ion-row class="ion-align-items-center">
             <ion-col>
                 <p style="text-align: center"> Hi There is no active device that is using ngrok service</p>
