@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgrokInterface, NgrokService} from "../services/ngrok.service";
+import {NgrokInterface, NgrokService} from "../../services/ngrok.service";
 import {Subscription} from "rxjs";
 import {AlertController, IonButton, ToastController} from "@ionic/angular";
-import {Ngrok} from "../model/ngrok";
+import {Ngrok} from "../../model/ngrok";
 import {Router} from "@angular/router";
 
 @Component({
