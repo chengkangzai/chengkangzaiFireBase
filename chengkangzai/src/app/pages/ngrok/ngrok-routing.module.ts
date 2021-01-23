@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NgrokPage} from './ngrok.page';
+import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
+import {IonicModule} from "@ionic/angular";
 
 const routes: Routes = [
     {
@@ -10,7 +12,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(routes), NgxAuthFirebaseUIModule, IonicModule],
     exports: [RouterModule]
 })
 export class NgrokPageRoutingModule {

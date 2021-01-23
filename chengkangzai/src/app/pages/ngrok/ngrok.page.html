@@ -3,10 +3,8 @@
         <ion-title>
             Ngrok status :3
         </ion-title>
-
         <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
                                     (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
-
     </ion-toolbar>
 </ion-header>
 
@@ -41,7 +39,7 @@
                     <ion-card-header>
                         <ion-card-title>{{ng.PCName}}</ion-card-title>
                     </ion-card-header>
-                    <ion-card-content>
+                    <ion-card-content class="ion-text-center">
                         <ion-badge color="{{ngrokService.calcMissingHour(ng.timestamp) > 12 ? 'danger':
                                     ngrokService.calcMissingHour(ng.timestamp) > 2 ? 'warning' : 'primary' }}">
                             <ion-label>

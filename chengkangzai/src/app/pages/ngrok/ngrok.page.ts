@@ -78,6 +78,6 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     async onSignOut() {
-        await this.router.navigateByUrl('login');
+        await this.router.navigateByUrl('/login')
     }
 }

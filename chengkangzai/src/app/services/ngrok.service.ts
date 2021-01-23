@@ -7,6 +7,7 @@ import {Ngrok} from "../model/ngrok";
 import Timestamp = firebase.firestore.Timestamp;
 
 export interface NgrokInterface {
+    id: string,
     PCName: string,
     ngrok: string,
     protocol: string,
@@ -30,12 +31,13 @@ export class NgrokService {
     }
 
     fetch() {
-        return this.firestore.collectionGroup('ngrok').valueChanges().pipe(
+        return this.firestore.collectionGroup('ngrok').valueChanges({idField: 'id'}).pipe(
             map(resData => {
                 console.log(resData)
                 let temp = [];
                 (<NgrokInterface[]>resData).forEach(data => {
                     temp.push(new Ngrok(
+                        data.id,
                         data.PCName,
                         data.ngrok,
                         data.protocol,
@@ -60,7 +62,7 @@ export class NgrokService {
     }
 
     async delete(ngrok: Ngrok) {
-        await this.firestore.doc('ngrok/' + ngrok.PCName).delete();
+        await this.firestore.doc('ngrok/' + ngrok.id).delete();
     }
 
 

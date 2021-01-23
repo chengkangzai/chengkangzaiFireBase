@@ -14,9 +14,9 @@ import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
         FormsModule,
         NgrokPageRoutingModule,
         ClipboardModule,
-        NgxAuthFirebaseUIModule
+        NgxAuthFirebaseUIModule,
     ],
     declarations: [NgrokPage]
 })
-export class Tab1PageModule {
+export class NgrokPageModule {
 }
