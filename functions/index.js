@@ -302,5 +302,25 @@ exports.login = functions.https.onRequest((req, res) => {
             res.status(500).send(error)
             return true;
         });
-
 });
+
+exports.addAdmin = functions.https.onRequest((req, res) => {
+    grandAdminRole(req.body.email).then(() => {
+        res.send({
+            message: `${req.body.email} is admin now`
+        })
+        return true;
+    }).catch((error) => {
+        res.send({
+            message: error
+        })
+    });
+})
+
+async function grandAdminRole(email) {
+    const user = await admin.auth().getUserByEmail(email)
+    await admin.auth().setCustomUserClaims(user.uid, {
+        master: true
+    })
+    return "";
+}
