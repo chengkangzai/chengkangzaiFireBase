@@ -35,10 +35,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
             // Same as password but for the name
             nameMaxLength: 50,
             nameMinLength: 2,
-            enableEmailVerification: false,
-            guardProtectedRoutesUntilEmailIsVerified:false,
+            enableEmailVerification: true,
+            guardProtectedRoutesUntilEmailIsVerified: false,
+            toastMessageOnAuthSuccess: false,
+            toastMessageOnAuthError: false
         }),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
     ],
 
     providers: [
