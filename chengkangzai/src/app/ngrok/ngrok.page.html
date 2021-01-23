@@ -3,14 +3,70 @@
         <ion-title>
             Ngrok status :3
         </ion-title>
+
+        <ngx-auth-firebaseui-avatar slot="end"></ngx-auth-firebaseui-avatar>
+
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Tab 1</ion-title>
-        </ion-toolbar>
-    </ion-header>
+    <!--<ion-button (click)="test()"></ion-button>-->
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-grid *ngIf="!ngrok || ngrok.length <=0" class="ion-text-center" id="horizontalCenterContainer" >
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <p style="text-align: center"> Hi There is no active device that is using ngrok service</p>
+                <p style="text-align: center"> Maybe try to add some ? :3</p>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="ngrok.length>=1">
+        <ion-row>
+            <ion-col *ngFor="let ng of ngrok" size-sm="4">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>{{ng.PCName}}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-badge color="{{ngrokService.calcMissingHour(ng.timestamp) > 12 ? 'danger':
+                                    ngrokService.calcMissingHour(ng.timestamp) > 2 ? 'warning' : 'primary' }}">
+                            <ion-label>
+                                {{ngrokService.calcMissingHour(ng.timestamp) < 2 ? 'Online' : 'Offline' }}
+                            </ion-label>
+                        </ion-badge>
+                        <ion-list>
+                            <ion-item>{{ng.ngrok}}</ion-item>
+                            <ion-item>Protocol : {{ng.protocol}}</ion-item>
+                            <ion-item>Last Seen : {{ng.timestamp.toDate() | date:'short'}}</ion-item>
+                            <ion-item *ngIf="ng.vpn !== 'N/A' ">{{ng.vpn}}</ion-item>
+                        </ion-list>
+                        <ion-buttons>
+                            <ion-button color="primary" fill="outline"
+                                        [cdkCopyToClipboard]="ng.ngrok.split('//')[1]"
+                                        (click)="buttonColor($event,'Tunnel')">
+                                Tunnel
+                            </ion-button>
+                            <ion-button color="primary" fill="outline"
+                                        [cdkCopyToClipboard]="'mstsc -v ' + ng.ngrok.split('//')[1]"
+                                        (click)="buttonColor($event,'Mstsc')">
+                                Mstsc
+                            </ion-button>
+                            <ion-button color="primary" fill="outline" *ngIf="ng.vpn !== 'N/A' "
+                                        (click)="buttonColor($event,'VPN')"
+                                        [cdkCopyToClipboard]="ng.vpn">VPN
+                            </ion-button>
+                            <ion-button color="danger" fill="outline" (click)="delete(ng)">Delete</ion-button>
+                        </ion-buttons>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 
 </ion-content>
