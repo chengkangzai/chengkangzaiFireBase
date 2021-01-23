@@ -54,8 +54,8 @@ function copymstsc(id) {
 }
 
 function copyVPNAddress(id) {
-    const ngrokInput = $(`#ngrokInput_${id}`);
-    $(`#VPNInput_${id}`).show();
+    const vpnInput = $(`#ngrokInput_${id}`);
+    vpnInput.show();
     const copyText = document.getElementById(`VPNInput_${id}`);
 
     copyText.select();
@@ -63,7 +63,7 @@ function copyVPNAddress(id) {
 
     document.execCommand("copy");
 
-    $(`#VPNInput_${id}`).hide();
+    vpnInput.hide();
     resetCopyBtn(id)
     $(`#copyVPN_${id}`).removeClass("btn-primary").addClass("btn-info");
 
@@ -75,9 +75,7 @@ function deletePC(pcName, id) {
         db
             .doc(`ngrok/${id}`)
             .delete()
-            .then((doc) => {
-                $(`#div_${id}`).hide();
-            })
+            .then(() => $(`#div_${id}`).hide())
     }
 }
 
@@ -96,7 +94,7 @@ function renderPC(data) {
 
     const vpnBtn = (() => {
         if (!(info.vpn === "N/A")) {
-            return `<a id='copyVPN_${ran}' class='mt-1 btn py-2 btn-primary' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
+            return `<a id='copyVPN_${ran}' class='mt-1 btn py-2 btn-outline-primary' onclick='copyVPNAddress(${ran})' role='button' href='#'>Copy VPN </a>`;
         }
         return "<div></div>";
     })();
@@ -158,8 +156,7 @@ function calcMissingHour(time) {
     const date1 = new Date(time.toDate())
     const date2 = new Date()
     const DIffInTime = date2.getTime() - date1.getTime();
-    const DiffInHour = DIffInTime / (1000 * 3600);
-    return DiffInHour;
+    return DIffInTime / (1000 * 3600);
 }
 
 firebase.auth().onAuthStateChanged(function (user) {
