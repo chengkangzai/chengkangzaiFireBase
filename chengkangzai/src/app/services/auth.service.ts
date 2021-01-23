@@ -5,7 +5,7 @@ import {User} from "../shared/user";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import firebase from "firebase";
+import firebase from "firebase/app";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 
@@ -13,7 +13,7 @@ import AuthProvider = firebase.auth.AuthProvider;
     providedIn: 'root'
 })
 
-export class AuthenticationService {
+export class AuthService {
     userData: any;
 
     // https://github.com/angular/angularfire/issues/2409
