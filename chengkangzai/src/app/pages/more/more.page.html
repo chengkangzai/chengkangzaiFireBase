@@ -1,21 +1,44 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title>
-            Tab 2
+            More
         </ion-title>
+        <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
+                                    (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    //Feedback
-    //Logout
-    //Greeting
+    <!--    //Feedback-->
+    <!--    //Logout-->
+    <!--    //Greeting-->
 
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Tab 2</ion-title>
-        </ion-toolbar>
-    </ion-header>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-list>
+                    <ion-item detail button href="/tabs/feedback">
+                        <ion-icon name="bug" slot="start"></ion-icon>
+                        <ion-label> Make Feedback</ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="Logout()">
+                        <ion-icon name="log-out" slot="start"></ion-icon>
+                        <ion-label>Log Out</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+            <ion-col size-sm="6" offset-sm="3" *ngIf="role.isMaster()">
+                <ion-list>
+                    <ion-item detail button href="/tabs/feedback/view" >
+                        <ion-icon name="bug" slot="start"></ion-icon>
+                        <ion-label> View Feedback</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-    <ion-button (click)="Logout()">Logout</ion-button>
+
 </ion-content>
