@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../services/authentication-service.service";
+import {AuthService} from "../../services/auth.service";
+import {RoleService} from "../../services/role.service";
 
 @Component({
     selector: 'app-more',
@@ -11,11 +12,16 @@ export class MorePage {
 
     constructor(
         private router: Router,
-        private authService: AuthenticationService,
+        private authService: AuthService,
+        public role:RoleService
     ) {
     }
 
     Logout() {
         this.authService.SignOut().then(() => this.router.navigateByUrl('/login'))
+    }
+
+    async onSignOut(){
+        await this.router.navigateByUrl('/login')
     }
 }
