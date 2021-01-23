@@ -70,7 +70,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
         db
             .collection("AccomUnit")
             .add(unitInfo)
-            .then(response => {
+            .then(() => {
                 res.send({
                     status: 200,
                     message: `Unit : ${unitInfo.unitNumber} is saved in database !`
@@ -92,7 +92,7 @@ exports.updateUnit = functions.https.onRequest((req, res) => {
         db
             .doc(`AccomUnit/${id}`)
             .update(unitInfo)
-            .then((doc) => {
+            .then(() => {
                 res.send({
                     status: 200,
                     message: `Unit : ${unitInfo.unitNumber} is updated in database !`
@@ -190,58 +190,20 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
 
     validation();
 
-    function addPC() {
-        db
-            .collection("ngrok")
-            .add(ngrokStatus)
-            .then(() => log("add"))
-            .catch();
-        res.send({
-            message: `This seem like you are first time register to the system! Welcome,${ngrokStatus.PCName} !`
-        });
-    }
-
-    function updatePC(id) {
-        db
-            .doc(`ngrok/${id}`)
-            .update(ngrokStatus)
-            .then(() => log('update'))
-            .catch()
-        res.send({
-            message: `Welcome back, ${ngrokStatus.PCName}! `
-        });
-    }
-
-    function log(mode) {
-        db
-            .collection(`ngrok/log/${ngrokStatus.PCName}`)
-            .add({
-                ngrokStatus: ngrokStatus,
-                pcName: ngrokStatus.PCName,
-                mode: mode,
-                timestamp: admin.firestore.Timestamp.fromDate(new Date())
-            })
-            .then()
-            .catch();
-    }
-
     db
-        .collection(`ngrok`)
-        .where('PCName', "==", ngrokStatus.PCName)
-        .get()
-        .then(snap => {
-            let docId;
-            if (snap.empty) {
-                addPC();
-            } else {
-                snap.forEach((data) => {
-                    docId = data.id;
-                });
-                updatePC(docId)
-            }
+        .collection("ngrok")
+        .doc(ngrokStatus.PCName)
+        .set(ngrokStatus, {merge: true})
+        .then(() => {
+            res.send({
+                message: 'Hi Done liao '
+            })
             return true;
         })
-        .catch();
+        .catch((error) => {
+            res.send(error);
+        });
+
 })
 
 exports.login = functions.https.onRequest((req, res) => {
@@ -282,7 +244,7 @@ exports.login = functions.https.onRequest((req, res) => {
                 unit: data.unit,
                 token: token
             })
-            .then(response => {
+            .then(() => {
                 res.send({
                     status: 200,
                     message: "You have Successfully Sign in!",
