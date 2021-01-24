@@ -173,6 +173,7 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
         vpn: req.body.vpnIP || "N/A",
         ngrok: req.body.ngrok || "N/A",
         protocol: req.body.protocol || "N/A",
+        email: req.body.email || "N/A",
         timestamp: admin.firestore.Timestamp.fromDate(new Date())
     }
 
@@ -181,6 +182,7 @@ exports.ngrokUpdate = functions.https.onRequest((req, res) => {
         if (ngrokStatus.PCName === "N/A") message.push("PCName should not be empty!")
         if (ngrokStatus.ngrok === "N/A") message.push("ngrok should not be empty!")
         if (ngrokStatus.protocol === "N/A") message.push("protocol should not be empty!")
+        if (ngrokStatus.email === "N/A") message.push("Email should not be empty!")
         if (!(message.length === 0)) {
             res.send({message});
             process.exit();
