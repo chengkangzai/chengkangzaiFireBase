@@ -3,7 +3,7 @@ import {AuthProvider} from "ngx-auth-firebaseui";
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {Subscription} from "rxjs";
-import {Platform} from "@ionic/angular";
+import {AlertController, Platform, ToastController} from "@ionic/angular";
 
 @Component({
     selector: 'app-login',
@@ -20,6 +20,8 @@ export class LoginPage {
         private router: Router,
         private afAuth: AngularFireAuth,
         private platform: Platform,
+        private alertController: AlertController,
+        private toaster: ToastController
     ) {
     }
 
@@ -42,6 +44,18 @@ export class LoginPage {
         if (this.authSub) {
             this.authSub.unsubscribe();
         }
+    }
+
+    async onAuthSuccess(event: Event) {
+        await this.router.navigateByUrl('tabs/ngrok');
+    }
+
+    async onAuthError(event: Event) {
+        const toast = await this.toaster.create({
+            message: 'There might be some problem with your internet connection , please try later',
+            duration: 2500,
+        })
+        return await toast.present();
     }
 
 }
