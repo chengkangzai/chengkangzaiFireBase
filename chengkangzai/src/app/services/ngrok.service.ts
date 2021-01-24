@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
 import firebase from "firebase";
 import {BehaviorSubject} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {map, switchMap, tap} from "rxjs/operators";
 import {Ngrok} from "../model/ngrok";
+import {RoleService} from "./role.service";
 import Timestamp = firebase.firestore.Timestamp;
 
 export interface NgrokInterface {
@@ -25,32 +26,38 @@ export class NgrokService {
 
     constructor
     (
-        private firestore: AngularFirestore
+        private firestore: AngularFirestore,
+        private roleService: RoleService,
     ) {
 
     }
 
     fetch() {
-        return this.firestore.collectionGroup('ngrok').valueChanges({idField: 'id'}).pipe(
-            map(resData => {
-                console.log(resData)
-                let temp = [];
-                (<NgrokInterface[]>resData).forEach(data => {
-                    temp.push(new Ngrok(
-                        data.id,
-                        data.PCName,
-                        data.ngrok,
-                        data.protocol,
-                        data.timestamp,
-                        data.vpn
-                    ));
-                })
-                return temp;
-            }),
-            tap(places => {
-                return this._ngrok.next(places);
-            })
-        )
+        return this.roleService.getUser().pipe(
+            switchMap(user => {
+                return this.firestore.collection('ngrok',
+                        ref => ref.where('email', '==', user.email))
+                    .valueChanges({idField: 'id'}).pipe(
+                        map(resData => {
+                            console.log(resData)
+                            let temp = [];
+                            (<NgrokInterface[]>resData).forEach(data => {
+                                temp.push(new Ngrok(
+                                    data.id,
+                                    data.PCName,
+                                    data.ngrok,
+                                    data.protocol,
+                                    data.timestamp,
+                                    data.vpn
+                                ));
+                            })
+                            return temp;
+                        }),
+                        tap(places => {
+                            return this._ngrok.next(places);
+                        })
+                    )
+            }))
     }
 
     get ngrok() {
