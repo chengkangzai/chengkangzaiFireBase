@@ -53,17 +53,20 @@
                             <ion-item *ngIf="ng.vpn !== 'N/A' ">{{ng.vpn}}</ion-item>
                         </ion-list>
                         <ion-buttons>
-                            <ion-button (click)="buttonColor($event,'Tunnel')" [cdkCopyToClipboard]="ng.ngrok.split('//')[1]"
+                            <ion-button (click)="buttonColor($event,'Tunnel')"
+                                        [cdkCopyToClipboard]="ng.ngrok.split('//')[1]"
                                         color="primary"
                                         fill="outline">
                                 Tunnel
                             </ion-button>
-                            <ion-button (click)="buttonColor($event,'Mstsc')" [cdkCopyToClipboard]="'mstsc -v ' + ng.ngrok.split('//')[1]"
+                            <ion-button (click)="buttonColor($event,'Mstsc')"
+                                        [cdkCopyToClipboard]="'mstsc -v ' + ng.ngrok.split('//')[1]"
                                         color="primary"
                                         fill="outline">
                                 Mstsc
                             </ion-button>
-                            <ion-button (click)="buttonColor($event,'VPN')" *ngIf="ng.vpn !== 'N/A' " [cdkCopyToClipboard]="ng.vpn"
+                            <ion-button (click)="buttonColor($event,'VPN')" *ngIf="ng.vpn !== 'N/A' "
+                                        [cdkCopyToClipboard]="ng.vpn"
                                         color="primary"
                                         fill="outline">VPN
                             </ion-button>
