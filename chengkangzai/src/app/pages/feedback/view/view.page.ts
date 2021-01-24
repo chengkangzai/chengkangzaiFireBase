@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FeedbackService} from "../../../services/feedback.service";
-import {Feedback} from "../../../model/feedback";
-import {Subscription} from "rxjs";
-import {AlertController, IonItemSliding} from "@ionic/angular";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {Router} from "@angular/router";
-import {RoleService} from "../../../services/role.service";
+import {FeedbackService} from '../../../services/feedback.service';
+import {Feedback} from '../../../model/feedback';
+import {Subscription} from 'rxjs';
+import {AlertController, IonItemSliding} from '@ionic/angular';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Router} from '@angular/router';
+import {RoleService} from '../../../services/role.service';
 
 @Component({
     selector: 'app-view',
@@ -17,7 +17,7 @@ export class ViewPage implements OnInit, OnDestroy {
     feedbacks: Feedback[];
     feedbackSub: Subscription;
     isLoading = true;
-    isMaster = false;
+    isMasterSub: Subscription;
 
     constructor(
         private feedbackService: FeedbackService,
@@ -29,28 +29,28 @@ export class ViewPage implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        this.isLoading = true
+        this.isLoading = true;
 
-        const isMasterSub = this.role.isMaster().subscribe(isMaster => this.isMaster = isMaster)
-
-
-        if (this.isMaster) {
-            this.feedbackSub = this.feedbackService.feedback.subscribe((feed) => {
-                this.feedbacks = feed;
-            })
-            this.feedbackService.fetch().subscribe(() => {
-                this.isLoading = false
-            });
-        } else {
-            await this.router.navigateByUrl('tabs/more');
-        }
-
-        isMasterSub.unsubscribe();
+        this.isMasterSub = this.role.isMaster().subscribe(async isMaster => {
+            if (isMaster) {
+                this.feedbackSub = this.feedbackService.feedback.subscribe((feed) => {
+                    this.feedbacks = feed;
+                });
+                this.feedbackService.fetch().subscribe(() => {
+                    this.isLoading = false;
+                });
+            } else {
+                await this.router.navigateByUrl('tabs/more');
+            }
+        });
     }
 
     ngOnDestroy() {
         if (this.feedbackSub) {
             this.feedbackSub.unsubscribe();
+        }
+        if (this.isMasterSub) {
+            this.isMasterSub.unsubscribe();
         }
     }
 
@@ -70,12 +70,12 @@ export class ViewPage implements OnInit, OnDestroy {
             }, {
                 text: 'Update',
                 handler: (input) => {
-                    this.feedbackService.update(f, input.feedback)
+                    this.feedbackService.update(f, input.feedback);
                 }
             }]
-        })
+        });
         await alert.present();
-        await itemSliding.close()
+        await itemSliding.close();
     }
 
     async onDelete(f: Feedback) {
@@ -91,7 +91,7 @@ export class ViewPage implements OnInit, OnDestroy {
                     this.feedbackService.delete(f);
                 }
             }]
-        })
+        });
         await alert.present();
     }
 

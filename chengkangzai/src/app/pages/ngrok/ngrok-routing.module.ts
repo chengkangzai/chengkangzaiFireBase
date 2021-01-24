@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NgrokPage} from './ngrok.page';
-import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
-import {IonicModule} from "@ionic/angular";
+import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
+import {IonicModule} from '@ionic/angular';
 
 const routes: Routes = [
     {

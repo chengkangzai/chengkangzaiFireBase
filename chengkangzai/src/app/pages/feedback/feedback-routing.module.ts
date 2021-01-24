@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {FeedbackPage} from './feedback.page';
-import {canActivate, hasCustomClaim} from "@angular/fire/auth-guard";
+import {canActivate, hasCustomClaim} from '@angular/fire/auth-guard';
 
-const masterOnly = () => hasCustomClaim('master')
+const masterOnly = () => hasCustomClaim('master');
 
 const routes: Routes = [
     {

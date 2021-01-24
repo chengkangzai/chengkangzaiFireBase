@@ -17,13 +17,13 @@
 <ion-content>
     <ion-grid>
         <ion-row>
-            <ion-col size-sm="6" offset-sm="3">
+            <ion-col offset-sm="3" size-sm="6">
                 <ion-label>Hi Feel free to drop some feedbacks here to improve this app !</ion-label>
                 <hr>
                 <ion-item>
                     <form [formGroup]="form">
                         <ion-label position="floating">Your Feedback</ion-label>
-                        <ion-textarea name="feedback" rows="3" formControlName="feedback"></ion-textarea>
+                        <ion-textarea formControlName="feedback" name="feedback" rows="3"></ion-textarea>
                     </form>
                 </ion-item>
             </ion-col>

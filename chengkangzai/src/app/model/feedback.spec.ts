@@ -1,5 +1,5 @@
 import {Feedback} from './feedback';
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 
 describe('Feedback', () => {
     it('should create an instance', () => {

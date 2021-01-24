@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
-import firebase from "firebase";
-import {AngularFirestore} from "@angular/fire/firestore";
-import {map, tap} from "rxjs/operators";
-import {Feedback} from "../model/feedback";
-import {AuthService} from "./auth.service";
+import {BehaviorSubject} from 'rxjs';
+import firebase from 'firebase';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {map, tap} from 'rxjs/operators';
+import {Feedback} from '../model/feedback';
+import {AuthService} from './auth.service';
 import Timestamp = firebase.firestore.Timestamp;
 
 interface FeedbackInterface {
@@ -19,31 +19,31 @@ interface FeedbackInterface {
 })
 export class FeedbackService {
 
-    private _feedback = new BehaviorSubject<Feedback[]>([]);
-
     constructor(
         private firestore: AngularFirestore,
         private authService: AuthService
     ) {
     }
 
+    private _feedback = new BehaviorSubject<Feedback[]>([]);
+
+    get feedback() {
+        return this._feedback.asObservable();
+    }
+
     fetch() {
         return this.firestore.collectionGroup('feedback').valueChanges({idField: 'id'}).pipe(
             map(resData => {
                 let temp = [];
-                (<FeedbackInterface[]>resData).forEach(data => {
-                    temp.push(new Feedback(data.id, data.feedback, data.timestamp, data.user))
-                })
+                (<FeedbackInterface[]> resData).forEach(data => {
+                    temp.push(new Feedback(data.id, data.feedback, data.timestamp, data.user));
+                });
                 return temp;
             })
             , tap(feedback => {
                 return this._feedback.next(feedback);
             })
-        )
-    }
-
-    get feedback() {
-        return this._feedback.asObservable()
+        );
     }
 
     async update(oriFeedback: Feedback, feedback: string) {
@@ -57,13 +57,13 @@ export class FeedbackService {
     }
 
     async add(feedback: string) {
-        const id = this.firestore.createId()
+        const id = this.firestore.createId();
         const email = this.authService.userData.email;
         return await this.firestore.collection('feedback').doc(id).set({
             id: id,
             feedback: feedback,
             timestamp: Timestamp.fromDate(new Date()),
             user: email
-        })
+        });
     }
 }

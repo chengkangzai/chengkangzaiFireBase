@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {MorePage} from './more.page';
 
 import {MorePageRoutingModule} from './more-routing.module';
-import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
+import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
 
 @NgModule({
     imports: [

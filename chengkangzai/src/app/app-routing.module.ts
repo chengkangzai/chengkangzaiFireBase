@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {LoggedInGuard} from "ngx-auth-firebaseui";
+import {LoggedInGuard} from 'ngx-auth-firebaseui';
 
 const routes: Routes = [
     {

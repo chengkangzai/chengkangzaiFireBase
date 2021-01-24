@@ -1,11 +1,11 @@
 import {Injectable, NgZone} from '@angular/core';
 // @ts-ignore
 import {auth} from 'firebase/auth';
-import {User} from "../shared/user";
-import {Router} from "@angular/router";
-import {AngularFireAuth} from "@angular/fire/auth";
+import {User} from '../shared/user';
+import {Router} from '@angular/router';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
 
@@ -32,27 +32,7 @@ export class AuthService {
                 localStorage.setItem('user', null);
                 JSON.parse(localStorage.getItem('user'));
             }
-        })
-    }
-
-    // Login in with email/password
-    SignIn(email, password) {
-        return this.ngFireAuth.signInWithEmailAndPassword(email, password)
-    }
-
-    // Register user with email/password
-    RegisterUser(email, password) {
-        return this.ngFireAuth.createUserWithEmailAndPassword(email, password)
-    }
-
-    // Recover password
-    PasswordRecover(passwordResetEmail) {
-        return this.ngFireAuth.sendPasswordResetEmail(passwordResetEmail)
-            .then(() => {
-                window.alert('Password reset email has been sent, please check your inbox.');
-            }).catch((error) => {
-                window.alert(error)
-            })
+        });
     }
 
     // Returns true when user is looged in
@@ -67,6 +47,26 @@ export class AuthService {
         return (user.emailVerified !== false);
     }
 
+    // Login in with email/password
+    SignIn(email, password) {
+        return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+    }
+
+    // Register user with email/password
+    RegisterUser(email, password) {
+        return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    }
+
+    // Recover password
+    PasswordRecover(passwordResetEmail) {
+        return this.ngFireAuth.sendPasswordResetEmail(passwordResetEmail)
+            .then(() => {
+                window.alert('Password reset email has been sent, please check your inbox.');
+            }).catch((error) => {
+                window.alert(error);
+            });
+    }
+
     // Sign in with Gmail
     GoogleAuth() {
         return this.AuthLogin(new GoogleAuthProvider());
@@ -78,11 +78,11 @@ export class AuthService {
             .then((result) => {
                 this.ngZone.run(() => {
                     this.router.navigate(['tabs/ngrok']);
-                })
+                });
                 this.SetUserData(result.user);
             }).catch((error) => {
-                window.alert(error)
-            })
+                window.alert(error);
+            });
     }
 
     // Store user in localStorage
@@ -94,10 +94,10 @@ export class AuthService {
             displayName: user.displayName,
             photoURL: user.photoURL,
             emailVerified: user.emailVerified
-        }
+        };
         return userRef.set(userData, {
             merge: true
-        })
+        });
     }
 
     // Sign-out
@@ -105,7 +105,7 @@ export class AuthService {
         return this.ngFireAuth.signOut().then(() => {
             localStorage.removeItem('user');
             this.router.navigate(['login']);
-        })
+        });
     }
 
 }

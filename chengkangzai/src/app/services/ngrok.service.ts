@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
-import firebase from "firebase";
-import {BehaviorSubject} from "rxjs";
-import {map, switchMap, tap} from "rxjs/operators";
-import {Ngrok} from "../model/ngrok";
-import {RoleService} from "./role.service";
+import {AngularFirestore} from '@angular/fire/firestore';
+import firebase from 'firebase';
+import {BehaviorSubject} from 'rxjs';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {Ngrok} from '../model/ngrok';
+import {RoleService} from './role.service';
 import Timestamp = firebase.firestore.Timestamp;
 
 export interface NgrokInterface {
@@ -22,14 +22,18 @@ export interface NgrokInterface {
 })
 export class NgrokService {
 
-    private _ngrok = new BehaviorSubject<NgrokInterface[]>([]);
-
     constructor
     (
         private firestore: AngularFirestore,
         private roleService: RoleService,
     ) {
 
+    }
+
+    private _ngrok = new BehaviorSubject<NgrokInterface[]>([]);
+
+    get ngrok() {
+        return this._ngrok.asObservable();
     }
 
     fetch() {
@@ -39,7 +43,7 @@ export class NgrokService {
                 ).valueChanges({idField: 'id'}).pipe(
                     map(resData => {
                         let temp = [];
-                        (<NgrokInterface[]>resData).forEach(data => {
+                        (<NgrokInterface[]> resData).forEach(data => {
                             temp.push(new Ngrok(
                                 data.id,
                                 data.PCName,
@@ -48,18 +52,14 @@ export class NgrokService {
                                 data.timestamp,
                                 data.vpn
                             ));
-                        })
+                        });
                         return temp;
                     }),
                     tap(places => {
                         return this._ngrok.next(places);
                     })
-                )
-            }))
-    }
-
-    get ngrok() {
-        return this._ngrok.asObservable();
+                );
+            }));
     }
 
     calcMissingHour(time: Timestamp): number {

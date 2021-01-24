@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgrokInterface, NgrokService} from "../../services/ngrok.service";
-import {Subscription} from "rxjs";
-import {AlertController, IonButton, ToastController} from "@ionic/angular";
-import {Ngrok} from "../../model/ngrok";
-import {Router} from "@angular/router";
+import {NgrokInterface, NgrokService} from '../../services/ngrok.service';
+import {Subscription} from 'rxjs';
+import {AlertController, IonButton, ToastController} from '@ionic/angular';
+import {Ngrok} from '../../model/ngrok';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-ngrok',
@@ -25,11 +25,11 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.isLoading = true
+        this.isLoading = true;
         this.ngrokSub = this.ngrokService.ngrok
             .subscribe((ngrok) => {
                 this.ngrok = ngrok;
-            })
+            });
         this.ngrokService.fetch().subscribe(() => {
             this.isLoading = false;
         });
@@ -42,16 +42,16 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     test() {
-        console.log(this.ngrok)
+        console.log(this.ngrok);
     }
 
     async buttonColor(event: MouseEvent, mode: 'Tunnel' | 'Mstsc' | 'VPN') {
-        const button = (<IonButton><unknown>event.target);
+        const button = (<IonButton> <unknown> event.target);
         button.color = button.color === 'primary' ? 'medium' : 'primary';
         const toast = await this.toaster.create({
             message: mode + ' has Copied to your clipboard',
             duration: 1000
-        })
+        });
         return await toast.present();
     }
 
@@ -64,10 +64,10 @@ export class NgrokPage implements OnInit, OnDestroy {
             }, {
                 text: 'Yes',
                 handler: async () => {
-                    await this.ngrokService.delete(ngrok)
+                    await this.ngrokService.delete(ngrok);
                 }
             }]
-        })
+        });
         return await alert.present();
     }
 
@@ -78,6 +78,6 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     async onSignOut() {
-        await this.router.navigateByUrl('/login')
+        await this.router.navigateByUrl('/login');
     }
 }

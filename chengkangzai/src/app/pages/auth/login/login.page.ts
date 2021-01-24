@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {AuthProvider} from "ngx-auth-firebaseui";
-import {Router} from "@angular/router";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {Subscription} from "rxjs";
-import {AlertController, Platform, ToastController} from "@ionic/angular";
+import {AuthProvider} from 'ngx-auth-firebaseui';
+import {Router} from '@angular/router';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {Subscription} from 'rxjs';
+import {AlertController, Platform, ToastController} from '@ionic/angular';
 
 @Component({
     selector: 'app-login',
@@ -37,7 +37,7 @@ export class LoginPage {
             if (user) {
                 await this.router.navigateByUrl('tabs/ngrok');
             }
-        })
+        });
     }
 
     ionViewWillLeave() {
@@ -54,7 +54,7 @@ export class LoginPage {
         const toast = await this.toaster.create({
             message: 'There might be some problem with your internet connection , please try later',
             duration: 2500,
-        })
+        });
         return await toast.present();
     }
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AlertController, LoadingController, ToastController} from "@ionic/angular";
-import {FeedbackService} from "../../services/feedback.service";
-import {Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AlertController, LoadingController, ToastController} from '@ionic/angular';
+import {FeedbackService} from '../../services/feedback.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-feedback',
@@ -28,7 +28,7 @@ export class FeedbackPage implements OnInit {
                 updateOn: 'change',
                 validators: [Validators.required, Validators.minLength(10)]
             })
-        })
+        });
     }
 
     async onSubmitForm() {
@@ -40,7 +40,7 @@ export class FeedbackPage implements OnInit {
                     text: 'Ok',
                     role: 'cancel'
                 }]
-            })
+            });
             await alert.present();
             return;
         }
@@ -48,17 +48,17 @@ export class FeedbackPage implements OnInit {
         const loading = await this.loadingController.create({
             message: 'Hang in there ... Submitting'
         });
-        await loading.present()
+        await loading.present();
 
         this.feedbackService.add(this.form.value.feedback).then(async () => {
-            await loading.dismiss()
+            await loading.dismiss();
             this.form.reset();
             const toast = await this.toaster.create({
                 message: 'Thanks for your Feedback !',
                 duration: 1500
-            })
+            });
             await toast.present();
-            await this.router.navigateByUrl('/tabs/more')
+            await this.router.navigateByUrl('/tabs/more');
         });
 
 

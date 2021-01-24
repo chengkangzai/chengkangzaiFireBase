@@ -3,8 +3,8 @@
         <ion-title>
             More
         </ion-title>
-        <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
-                                    (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
+        <ngx-auth-firebaseui-avatar (onSignOut)="onSignOut()" [canDeleteAccount]="true" [canEditAccount]="true"
+                                    slot="end"></ngx-auth-firebaseui-avatar>
     </ion-toolbar>
 </ion-header>
 
@@ -15,37 +15,37 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col size-sm="6" offset-sm="3">
+            <ion-col offset-sm="3" size-sm="6">
                 <ion-list>
-                    <ion-item detail button href="/tabs/feedback">
+                    <ion-item button detail href="/tabs/feedback">
                         <ion-icon name="bug" slot="start"></ion-icon>
                         <ion-label> Make Feedback</ion-label>
                     </ion-item>
                 </ion-list>
                 <ion-list>
-                    <ion-item detail button (click)="Logout()">
+                    <ion-item (click)="Logout()" button detail>
                         <ion-icon name="log-out" slot="start"></ion-icon>
                         <ion-label>Log Out</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-col>
-            <ion-col size-sm="6" offset-sm="3" *ngIf="isMaster">
+            <ion-col *ngIf="isMaster" offset-sm="3" size-sm="6">
                 <ion-list>
-                    <ion-item detail button href="/tabs/feedback/view">
+                    <ion-item button detail href="/tabs/feedback/view">
                         <ion-icon name="bug" slot="start"></ion-icon>
                         <ion-label> View Feedback</ion-label>
                     </ion-item>
                 </ion-list>
                 <ion-list>
-                    <ion-item detail button (click)="send('Morning')">
+                    <ion-item (click)="send('Morning')" button detail>
                         <ion-icon name="sunny" slot="start"></ion-icon>
-                        <ion-label> Greet the mightiest </ion-label>
+                        <ion-label> Greet the mightiest</ion-label>
                     </ion-item>
                 </ion-list>
                 <ion-list>
-                    <ion-item detail button (click)="send('Night')">
+                    <ion-item (click)="send('Night')" button detail>
                         <ion-icon name="moon" slot="start"></ion-icon>
-                        <ion-label> Greet the mightiest </ion-label>
+                        <ion-label> Greet the mightiest</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-col>

@@ -3,15 +3,15 @@
         <ion-title>
             Ngrok status :3
         </ion-title>
-        <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
-                                    (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
+        <ngx-auth-firebaseui-avatar (onSignOut)="onSignOut()" [canDeleteAccount]="true" [canEditAccount]="true"
+                                    slot="end"></ngx-auth-firebaseui-avatar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
     <!--<ion-button (click)="test()"></ion-button>-->
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)" slot="fixed">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
@@ -34,7 +34,7 @@
 
     <ion-grid *ngIf="ngrok.length>=1">
         <ion-row>
-            <ion-col *ngFor="let ng of ngrok" size-md="6" size-lg="4" >
+            <ion-col *ngFor="let ng of ngrok" size-lg="4" size-md="6">
                 <ion-card>
                     <ion-card-header>
                         <ion-card-title>{{ng.PCName}}</ion-card-title>
@@ -53,21 +53,21 @@
                             <ion-item *ngIf="ng.vpn !== 'N/A' ">{{ng.vpn}}</ion-item>
                         </ion-list>
                         <ion-buttons>
-                            <ion-button color="primary" fill="outline"
-                                        [cdkCopyToClipboard]="ng.ngrok.split('//')[1]"
-                                        (click)="buttonColor($event,'Tunnel')">
+                            <ion-button (click)="buttonColor($event,'Tunnel')" [cdkCopyToClipboard]="ng.ngrok.split('//')[1]"
+                                        color="primary"
+                                        fill="outline">
                                 Tunnel
                             </ion-button>
-                            <ion-button color="primary" fill="outline"
-                                        [cdkCopyToClipboard]="'mstsc -v ' + ng.ngrok.split('//')[1]"
-                                        (click)="buttonColor($event,'Mstsc')">
+                            <ion-button (click)="buttonColor($event,'Mstsc')" [cdkCopyToClipboard]="'mstsc -v ' + ng.ngrok.split('//')[1]"
+                                        color="primary"
+                                        fill="outline">
                                 Mstsc
                             </ion-button>
-                            <ion-button color="primary" fill="outline" *ngIf="ng.vpn !== 'N/A' "
-                                        (click)="buttonColor($event,'VPN')"
-                                        [cdkCopyToClipboard]="ng.vpn">VPN
+                            <ion-button (click)="buttonColor($event,'VPN')" *ngIf="ng.vpn !== 'N/A' " [cdkCopyToClipboard]="ng.vpn"
+                                        color="primary"
+                                        fill="outline">VPN
                             </ion-button>
-                            <ion-button color="danger" fill="outline" (click)="delete(ng)">Delete</ion-button>
+                            <ion-button (click)="delete(ng)" color="danger" fill="outline">Delete</ion-button>
                         </ion-buttons>
                     </ion-card-content>
                 </ion-card>
