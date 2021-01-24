@@ -35,28 +35,26 @@ export class NgrokService {
     fetch() {
         return this.roleService.getUser().pipe(
             switchMap(user => {
-                return this.firestore.collection('ngrok',
-                        ref => ref.where('email', '==', user.email))
-                    .valueChanges({idField: 'id'}).pipe(
-                        map(resData => {
-                            console.log(resData)
-                            let temp = [];
-                            (<NgrokInterface[]>resData).forEach(data => {
-                                temp.push(new Ngrok(
-                                    data.id,
-                                    data.PCName,
-                                    data.ngrok,
-                                    data.protocol,
-                                    data.timestamp,
-                                    data.vpn
-                                ));
-                            })
-                            return temp;
-                        }),
-                        tap(places => {
-                            return this._ngrok.next(places);
+                return this.firestore.collection('ngrok', ref => ref.where('email', '==', user.email)
+                ).valueChanges({idField: 'id'}).pipe(
+                    map(resData => {
+                        let temp = [];
+                        (<NgrokInterface[]>resData).forEach(data => {
+                            temp.push(new Ngrok(
+                                data.id,
+                                data.PCName,
+                                data.ngrok,
+                                data.protocol,
+                                data.timestamp,
+                                data.vpn
+                            ));
                         })
-                    )
+                        return temp;
+                    }),
+                    tap(places => {
+                        return this._ngrok.next(places);
+                    })
+                )
             }))
     }
 
