@@ -29,11 +29,23 @@
                     </ion-item>
                 </ion-list>
             </ion-col>
-            <ion-col size-sm="6" offset-sm="3" *ngIf="role.isMaster()">
+            <ion-col size-sm="6" offset-sm="3" *ngIf="isMaster">
                 <ion-list>
-                    <ion-item detail button href="/tabs/feedback/view" >
+                    <ion-item detail button href="/tabs/feedback/view">
                         <ion-icon name="bug" slot="start"></ion-icon>
                         <ion-label> View Feedback</ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="send('Morning')">
+                        <ion-icon name="sunny" slot="start"></ion-icon>
+                        <ion-label> Greet the mightiest </ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="send('Night')">
+                        <ion-icon name="moon" slot="start"></ion-icon>
+                        <ion-label> Greet the mightiest </ion-label>
                     </ion-item>
                 </ion-list>
             </ion-col>
