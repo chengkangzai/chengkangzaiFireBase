@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            More
+        </ion-title>
+        <ngx-auth-firebaseui-avatar [canDeleteAccount]="true" [canEditAccount]="true" slot="end"
+                                    (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <!--    //Feedback-->
+    <!--    //Logout-->
+    <!--    //Greeting-->
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-list>
+                    <ion-item detail button href="/tabs/feedback">
+                        <ion-icon name="bug" slot="start"></ion-icon>
+                        <ion-label> Make Feedback</ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="Logout()">
+                        <ion-icon name="log-out" slot="start"></ion-icon>
+                        <ion-label>Log Out</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+            <ion-col size-sm="6" offset-sm="3" *ngIf="isMaster">
+                <ion-list>
+                    <ion-item detail button href="/tabs/feedback/view">
+                        <ion-icon name="bug" slot="start"></ion-icon>
+                        <ion-label> View Feedback</ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="send('Morning')">
+                        <ion-icon name="sunny" slot="start"></ion-icon>
+                        <ion-label> Greet the mightiest </ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-item detail button (click)="send('Night')">
+                        <ion-icon name="moon" slot="start"></ion-icon>
+                        <ion-label> Greet the mightiest </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>
