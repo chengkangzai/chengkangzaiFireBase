@@ -8,12 +8,12 @@ import {RoleService} from './role.service';
 import Timestamp = firebase.firestore.Timestamp;
 
 export interface NgrokInterface {
-    id: string,
-    PCName: string,
-    ngrok: string,
-    protocol: string,
-    timestamp: Timestamp,
-    vpn: string
+    id: string;
+    PCName: string;
+    ngrok: string;
+    protocol: string;
+    timestamp: Timestamp;
+    vpn: string;
 }
 
 
@@ -22,14 +22,14 @@ export interface NgrokInterface {
 })
 export class NgrokService {
 
-    constructor
-    (
+    constructor(
         private firestore: AngularFirestore,
         private roleService: RoleService,
     ) {
 
     }
 
+    // tslint:disable-next-line:variable-name
     private _ngrok = new BehaviorSubject<NgrokInterface[]>([]);
 
     get ngrok() {
@@ -39,10 +39,10 @@ export class NgrokService {
     fetch() {
         return this.roleService.getUser().pipe(
             switchMap(user => {
-                return this.firestore.collection('ngrok', ref => ref.where('email', '==', user.email)
+                return this.firestore.collection('ngrok', ref => ref.where('email', '==', user?.providerData[0]?.email)
                 ).valueChanges({idField: 'id'}).pipe(
                     map(resData => {
-                        let temp = [];
+                        const temp = [];
                         (<NgrokInterface[]> resData).forEach(data => {
                             temp.push(new Ngrok(
                                 data.id,
@@ -69,6 +69,4 @@ export class NgrokService {
     async delete(ngrok: Ngrok) {
         await this.firestore.doc('ngrok/' + ngrok.id).delete();
     }
-
-
 }

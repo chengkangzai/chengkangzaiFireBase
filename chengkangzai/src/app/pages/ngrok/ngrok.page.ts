@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {AlertController, IonButton, ToastController} from '@ionic/angular';
 import {Ngrok} from '../../model/ngrok';
 import {Router} from '@angular/router';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Component({
     selector: 'app-ngrok',
@@ -20,7 +21,8 @@ export class NgrokPage implements OnInit, OnDestroy {
         public ngrokService: NgrokService,
         private toaster: ToastController,
         private alertController: AlertController,
-        private router: Router
+        private router: Router,
+        private auth: AngularFireAuth,
     ) {
     }
 
@@ -46,8 +48,9 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     async buttonColor(event: MouseEvent, mode: 'Tunnel' | 'Mstsc' | 'VPN') {
-        const button = (<IonButton> <unknown> event.target);
+        const button = (event.target as unknown as IonButton);
         button.color = button.color === 'primary' ? 'medium' : 'primary';
+        button.disabled = button.color === 'primary';
         const toast = await this.toaster.create({
             message: mode + ' has Copied to your clipboard',
             duration: 1000
@@ -78,6 +81,6 @@ export class NgrokPage implements OnInit, OnDestroy {
     }
 
     async onSignOut() {
-        await this.router.navigateByUrl('/login');
+        await this.auth.signOut().then(() => this.router.navigateByUrl('/login'));
     }
 }
