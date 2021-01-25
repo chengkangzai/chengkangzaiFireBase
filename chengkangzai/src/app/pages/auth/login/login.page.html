@@ -16,8 +16,8 @@
                                              [guestEnabled]="false" [providers]="providers.EmailAndPassword">
                         </ngx-auth-firebaseui>
                         <ngx-auth-firebaseui-providers (onError)="onAuthError($event)"
-                                                       (onSuccess)="onAuthSuccess($event)"
-                                                       *ngIf="!isPhone" [providers]="providers.Google">
+                                                       (onSuccess)="onAuthSuccess($event)" *ngIf="!isPhone"
+                                                       [providers]="[providers.Github,providers.Google]">
                         </ngx-auth-firebaseui-providers>
                     </ion-card-content>
                 </ion-card>

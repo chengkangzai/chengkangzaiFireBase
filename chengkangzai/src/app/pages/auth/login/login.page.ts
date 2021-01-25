@@ -4,6 +4,9 @@ import {Router} from '@angular/router';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Subscription} from 'rxjs';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
+import firebase from 'firebase';
+import AuthError = firebase.auth.AuthError;
+import User = firebase.User;
 
 @Component({
     selector: 'app-login',
@@ -46,16 +49,21 @@ export class LoginPage {
         }
     }
 
-    async onAuthSuccess(event: Event) {
+    async onAuthSuccess($event: User) {
+        const toast = await this.toaster.create({
+            message: `Welcome back ! ${$event.providerData[0].displayName}`,
+            duration: 5000,
+        });
+        await toast.present();
         await this.router.navigateByUrl('tabs/ngrok');
     }
 
-    async onAuthError(event: Event) {
+    async onAuthError(event: AuthError) {
         const toast = await this.toaster.create({
-            message: 'There might be some problem with your internet connection , please try later',
-            duration: 2500,
+            message: event.message,
+            duration: 5000,
         });
-        return await toast.present();
+        await toast.present();
     }
 
 }
