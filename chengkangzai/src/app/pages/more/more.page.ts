@@ -50,7 +50,7 @@ export class MorePage implements OnInit, OnDestroy {
     }
 
     async onSignOut() {
-        await this.router.navigateByUrl('/login');
+        await this.authService.SignOut().then(() => this.router.navigateByUrl('/login'));
     }
 
     async send(mode: 'Morning' | 'Night') {
