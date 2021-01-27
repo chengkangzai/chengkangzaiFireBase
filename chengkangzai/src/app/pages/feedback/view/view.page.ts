@@ -78,6 +78,20 @@ export class ViewPage implements OnInit, OnDestroy {
         await itemSliding.close();
     }
 
+    async onShow(f: Feedback, itemSliding: IonItemSliding) {
+        const alert = await this.alertController.create({
+            header: 'Show ' + f.feedback,
+            message: f.feedback,
+            buttons: [{
+                text: 'CANCEL',
+                role: 'cancel'
+            }],
+        });
+        await alert.present();
+        await itemSliding.close();
+    }
+
+
     async onDelete(f: Feedback) {
         const alert = await this.alertController.create({
             message: `are you sure you want to delete Feedback '${f.feedback}' ?`,

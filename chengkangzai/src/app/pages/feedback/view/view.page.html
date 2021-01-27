@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/tabs/feedback"></ion-back-button>
+            <ion-back-button defaultHref="/tabs/more"></ion-back-button>
         </ion-buttons>
         <ion-title>View Feedback :3</ion-title>
     </ion-toolbar>
@@ -36,7 +36,7 @@
             <ion-col offset-sm="3" size-sm="6">
                 <ion-list *ngIf="feedbacks.length > 0 ">
                     <ion-item-sliding #itemSliding *ngFor="let f of feedbacks">
-                        <ion-item detail>
+                        <ion-item button detail (click)="onShow(f,itemSliding)">
                             <ion-label>
                                 <h2>{{f.feedback}}</h2>
                             </ion-label>

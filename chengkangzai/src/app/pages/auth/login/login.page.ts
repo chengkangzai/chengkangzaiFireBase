@@ -52,7 +52,7 @@ export class LoginPage {
     async onAuthSuccess($event: User) {
         const toast = await this.toaster.create({
             message: `Welcome back ! ${$event.providerData[0].displayName}`,
-            duration: 5000,
+            duration: 1000,
         });
         await toast.present();
         await this.router.navigateByUrl('tabs/ngrok');
