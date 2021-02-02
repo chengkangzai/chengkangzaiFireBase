@@ -26,13 +26,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
         AngularFireDatabaseModule,
-        AngularFirestoreModule,
+        AngularFirestoreModule.enablePersistence({synchronizeTabs: true}),
         NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'chengkangzai', {
             enableFirestoreSync: true, // enable/disable autosync users with firestore
             authGuardFallbackURL: '/login', // url for unauthenticated users - to use in combination with canActivate feature on a route
             authGuardLoggedInURL: '/tabs/ngrok', // url for authenticated users - to use in combination with canActivate feature on a route
             passwordMinLength: 8, // Password length min/max in forms independently of each componenet min/max.
-            // Same as password but for the name
             nameMaxLength: 50,
             nameMinLength: 2,
             enableEmailVerification: true,
