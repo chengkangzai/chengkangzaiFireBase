@@ -8,10 +8,10 @@ import {AuthService} from './auth.service';
 import Timestamp = firebase.firestore.Timestamp;
 
 interface FeedbackInterface {
-    id: string,
-    feedback: string,
-    timestamp: Timestamp,
-    user: string
+    id: string;
+    feedback: string;
+    timestamp: Timestamp;
+    user: string;
 }
 
 @Injectable({
@@ -25,6 +25,7 @@ export class FeedbackService {
     ) {
     }
 
+    // tslint:disable-next-line:variable-name
     private _feedback = new BehaviorSubject<Feedback[]>([]);
 
     get feedback() {
@@ -34,8 +35,8 @@ export class FeedbackService {
     fetch() {
         return this.firestore.collectionGroup('feedback').valueChanges({idField: 'id'}).pipe(
             map(resData => {
-                let temp = [];
-                (<FeedbackInterface[]> resData).forEach(data => {
+                const temp = [];
+                (resData as FeedbackInterface[]).forEach(data => {
                     temp.push(new Feedback(data.id, data.feedback, data.timestamp, data.user));
                 });
                 return temp;
@@ -48,7 +49,7 @@ export class FeedbackService {
 
     async update(oriFeedback: Feedback, feedback: string) {
         return await this.firestore.doc(`feedback/${oriFeedback.id}`).set({
-            feedback: feedback
+            feedback
         });
     }
 
@@ -60,8 +61,8 @@ export class FeedbackService {
         const id = this.firestore.createId();
         const email = this.authService.userData.email;
         return await this.firestore.collection('feedback').doc(id).set({
-            id: id,
-            feedback: feedback,
+            id,
+            feedback,
             timestamp: Timestamp.fromDate(new Date()),
             user: email
         });
