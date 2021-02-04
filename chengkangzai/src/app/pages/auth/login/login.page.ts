@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {Subscription} from 'rxjs';
 import {AlertController, Platform, ToastController} from '@ionic/angular';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import AuthError = firebase.auth.AuthError;
 import User = firebase.User;
 

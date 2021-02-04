@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import {BehaviorSubject} from 'rxjs';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {Ngrok} from '../model/ngrok';
@@ -43,7 +43,7 @@ export class NgrokService {
                 ).valueChanges({idField: 'id'}).pipe(
                     map(resData => {
                         const temp = [];
-                        (<NgrokInterface[]> resData).forEach(data => {
+                        (resData as NgrokInterface[]).forEach(data => {
                             temp.push(new Ngrok(
                                 data.id,
                                 data.PCName,

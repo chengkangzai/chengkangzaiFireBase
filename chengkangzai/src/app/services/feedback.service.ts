@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, tap} from 'rxjs/operators';
 import {Feedback} from '../model/feedback';

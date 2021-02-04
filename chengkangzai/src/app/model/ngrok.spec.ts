@@ -1,5 +1,5 @@
 import {Ngrok} from './ngrok';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 describe('Ngrok', () => {
     it('should create an instance', () => {
