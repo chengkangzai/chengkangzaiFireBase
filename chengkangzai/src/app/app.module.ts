@@ -15,9 +15,10 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AboutComponent} from './components/about/about.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, AboutComponent ],
     entryComponents: [],
     imports: [
         BrowserModule,

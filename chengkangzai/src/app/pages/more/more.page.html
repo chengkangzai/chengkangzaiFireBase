@@ -9,10 +9,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <!--    //Feedback-->
-    <!--    //Logout-->
-    <!--    //Greeting-->
-
     <ion-grid>
         <ion-row>
             <ion-col offset-sm="3" size-sm="6">
@@ -21,11 +17,13 @@
                         <ion-icon name="bug" slot="start"></ion-icon>
                         <ion-label> Make Feedback</ion-label>
                     </ion-item>
-                </ion-list>
-                <ion-list>
                     <ion-item (click)="Logout()" button detail>
                         <ion-icon name="log-out" slot="start"></ion-icon>
                         <ion-label>Log Out</ion-label>
+                    </ion-item>
+                    <ion-item (click)="about()" button detail>
+                        <ion-icon name="information-circle" slot="start"></ion-icon>
+                        <ion-label>About</ion-label>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -35,14 +33,10 @@
                         <ion-icon name="bug" slot="start"></ion-icon>
                         <ion-label> View Feedback</ion-label>
                     </ion-item>
-                </ion-list>
-                <ion-list>
                     <ion-item (click)="send('Morning')" button detail>
                         <ion-icon name="sunny" slot="start"></ion-icon>
                         <ion-label> Greet the mightiest</ion-label>
                     </ion-item>
-                </ion-list>
-                <ion-list>
                     <ion-item (click)="send('Night')" button detail>
                         <ion-icon name="moon" slot="start"></ion-icon>
                         <ion-label> Greet the mightiest</ion-label>

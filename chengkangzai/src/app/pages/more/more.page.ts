@@ -3,8 +3,9 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {RoleService} from '../../services/role.service';
 import {Subscription} from 'rxjs';
-import {ActionSheetController, ToastController} from '@ionic/angular';
+import {ActionSheetController, ModalController, ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
+import {AboutComponent} from '../../components/about/about.component';
 
 @Component({
     selector: 'app-more',
@@ -22,7 +23,8 @@ export class MorePage implements OnInit, OnDestroy {
         private role: RoleService,
         private actionSheet: ActionSheetController,
         private http: HttpClient,
-        private toaster: ToastController
+        private toaster: ToastController,
+        private modalController: ModalController
     ) {
     }
 
@@ -80,5 +82,12 @@ export class MorePage implements OnInit, OnDestroy {
             duration: 1500
         });
         return toast.present();
+    }
+
+    async about() {
+        const modal = await this.modalController.create({
+            component: AboutComponent,
+        });
+        await modal.present();
     }
 }
