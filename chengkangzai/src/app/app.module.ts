@@ -16,10 +16,10 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AboutComponent} from './components/about/about.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 @NgModule({
-    declarations: [AppComponent, AboutComponent ],
+    declarations: [AppComponent, AboutComponent],
     entryComponents: [],
     imports: [
         BrowserModule,
@@ -42,7 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
             toastMessageOnAuthError: false
         }),
         BrowserAnimationsModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     ],
 
     providers: [
