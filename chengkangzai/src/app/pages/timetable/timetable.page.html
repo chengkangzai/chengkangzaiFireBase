@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>timetable</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid *ngIf="isLoading " class="ion-text-center horizontalCenterContainer">
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <ion-spinner></ion-spinner>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="!isLoading && timeTables" class="ion-text-center horizontalCenterContainer">
+        <ion-row class="ion-align-items-center">
+            <ion-col offset-sm="3" size-sm="6">
+                <ion-button (click)="downloadICS()">Download ICS</ion-button>
+                <h1>Your Timetable</h1>
+                <ion-list *ngFor="let f of timeTables">
+                    <ion-item button detail (click)="onShow(f)">
+                        <ion-label>
+                            <h2>
+                                {{f.MODID}}
+                                ({{f.TIME_FROM_ISO |date:'short'}} - {{f.TIME_TO_ISO |date:'short'}})
+                            </h2>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>
