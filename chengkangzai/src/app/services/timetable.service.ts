@@ -85,4 +85,27 @@ export class TimetableService {
         });
 
     }
+
+    mutateToICSFormat(f: TimeTable) {
+        const timeFrom = new Date(f.TIME_FROM_ISO);
+        const [fMonth, fDay, fYear] = timeFrom.toLocaleDateString('en-US').split('/');
+        const dateFuture = new Date(f.TIME_TO_ISO);
+
+        // @ts-ignore
+        let diffInMilliSeconds = Math.abs(dateFuture - timeFrom) / 1000;
+        const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+        diffInMilliSeconds -= hours * 3600;
+        const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+
+
+        return {
+            start: [fYear, fMonth, fDay, timeFrom.getHours(), timeFrom.getMinutes()],
+            duration: {hours, minutes},
+            title: f.MODID,
+            description: `${f.MODID} that held by ${f.SAMACCOUNTNAME} `,
+            location: f.LOCATION,
+            organizer: {name: f.SAMACCOUNTNAME, email: `${f.LECTID}@staffemail.apu.edu.my`},
+            attendees: [{name: f.SAMACCOUNTNAME, email: `${f.LECTID}@staffemail.apu.edu.my`}]
+        };
+    }
 }

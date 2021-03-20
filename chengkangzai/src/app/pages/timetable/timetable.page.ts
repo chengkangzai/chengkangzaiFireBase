@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TimetableService} from '../../services/timetable.service';
 import {TimeTable} from '../../model/time-table';
+import * as ics from 'ics';
 
 @Component({
     selector: 'app-timetable',
@@ -41,4 +42,20 @@ export class TimetablePage implements OnInit {
         // Show Complete Detail
     }
 
+    downloadICS() {
+        const events = [];
+        this.timeTables.forEach(timeTable => {
+            events.push(this.timetableService.mutateToICSFormat(timeTable));
+        });
+
+        // @ts-ignore
+        const {error, value} = ics.createEvents(events);
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+
+        window.open('data:text/calendar;charset=utf8,' + value);
+    }
 }
