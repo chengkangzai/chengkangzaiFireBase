@@ -20,12 +20,7 @@ const routes: Routes = [
         path: 'login',
         ...canActivate(redirectLoggedInToItems),
         loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginPageModule)
-    },  {
-    path: 'timetable',
-    loadChildren: () => import('./pages/timetable/timetable.module').then( m => m.TimetablePageModule)
-  },
-
-
+    },
 ];
 
 @NgModule({
