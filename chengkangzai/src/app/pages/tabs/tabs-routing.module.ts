@@ -20,10 +20,6 @@ const routes: Routes = [
                 loadChildren: () => import('../feedback/feedback.module').then(m => m.FeedbackPageModule)
             },
             {
-                path: 'timetable',
-                loadChildren: () => import('../timetable/timetable.module').then(m => m.TimetablePageModule)
-            },
-            {
                 path: '',
                 redirectTo: '/tabs/ngrok',
                 pathMatch: 'full'
