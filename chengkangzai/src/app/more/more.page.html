@@ -17,10 +17,6 @@
     <ion-row>
       <ion-col offset-sm="3" size-sm="6">
         <ion-list>
-          <ion-item button detail routerLink="/tabs/feedback">
-            <ion-icon name="bug" slot="start"></ion-icon>
-            <ion-label> Make Feedback</ion-label>
-          </ion-item>
           <ion-item (click)="Logout()" button detail>
             <ion-icon name="log-out" slot="start"></ion-icon>
             <ion-label>Log Out</ion-label>
@@ -33,10 +29,6 @@
       </ion-col>
       <ion-col *ngIf="isMaster" offset-sm="3" size-sm="6">
         <ion-list>
-          <ion-item button detail routerLink="/tabs/feedback/view">
-            <ion-icon name="bug" slot="start"></ion-icon>
-            <ion-label> View Feedback</ion-label>
-          </ion-item>
           <ion-item (click)="send('Morning')" button detail>
             <ion-icon name="sunny" slot="start"></ion-icon>
             <ion-label> Greet the mightiest</ion-label>
