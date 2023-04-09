@@ -7,30 +7,25 @@ export const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'ngrok',
         loadComponent: () =>
-          import('../tab1/tab1.page').then((m) => m.Tab1Page),
+          import('../ngrok/ngrok.page').then((m) => m.NgrokPage),
       },
       {
-        path: 'tab2',
+        path: 'more',
         loadComponent: () =>
-          import('../tab2/tab2.page').then((m) => m.Tab2Page),
-      },
-      {
-        path: 'tab3',
-        loadComponent: () =>
-          import('../tab3/tab3.page').then((m) => m.Tab3Page),
+          import('../more/more.page').then((m) => m.MorePage),
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/ngrok',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/ngrok',
     pathMatch: 'full',
   },
 ];
