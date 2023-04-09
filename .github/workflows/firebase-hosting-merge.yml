@@ -16,6 +16,8 @@ jobs:
       - name: Generate environment file
         run: |
           mkdir -p chengkangzai/src/environments
+          touch chengkangzai/src/environments/environment.prod.ts
+          touch chengkangzai/src/environments/environment.ts
           echo "export const environment = {" > chengkangzai/src/environments/environment.prod.ts
           echo "  firebase: {" >> chengkangzai/src/environments/environment.prod.ts
           echo "    projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'," >> chengkangzai/src/environments/environment.prod.ts
