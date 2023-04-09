@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/dist/types/internal/BehaviorSubject';
+// @ts-ignore
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {Ngrok} from '../model/ngrok';
 import {RoleService} from './role.service';
@@ -40,7 +41,8 @@ export class NgrokService {
       .pipe(
         switchMap(user => {
             return this.firestore
-              .collection('ngrok', ref => ref.where('email', '==', user?.providerData[0]?.email))
+              // .collection('ngrok', ref => ref.where('email', '==', user?.providerData[0]?.email))
+              .collection('ngrok', ref => ref.where('email', '==', 'pycck@hotmail.com'))
               .valueChanges({idField: 'id'}).pipe(
                 map(resData => {
                   return (resData as NgrokInterface[])

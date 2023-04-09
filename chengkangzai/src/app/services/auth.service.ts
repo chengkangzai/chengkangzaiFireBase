@@ -1,15 +1,14 @@
 import {Injectable, NgZone} from '@angular/core';
 // @ts-ignore
 import {auth} from 'firebase/auth';
-import {User} from '../model/user';
 import {Router} from '@angular/router';
 import {GoogleAuthProvider} from "firebase/auth";
 import {AuthProvider} from "firebase/auth";
-
 // @ts-ignore
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {User} from "@firebase/auth-types";
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +24,13 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone
   ) {
-    this.ngFireAuth.authState.subscribe((user: User) => {
+    this.ngFireAuth.authState.subscribe((user: User | null) => {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user') ?? '');
       } else {
-        localStorage.removeItem('user');
+        localStorage.setItem('user', '');
         JSON.parse(localStorage.getItem('user') ?? '');
       }
     });
@@ -78,7 +77,7 @@ export class AuthService {
   // Store user in localStorage
   SetUserData({user}: { user: any }) {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(`users/${user.uid}`);
-    const userData: User = {
+    const userData = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
