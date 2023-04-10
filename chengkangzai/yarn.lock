@@ -1364,6 +1364,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@capacitor/android@4.7.3":
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-4.7.3.tgz#ab7dea3746032c01a04b00b1fac1da5974eda45e"
+  integrity sha512-TmVg7vbAt6Iw0FWc51dLlW1gRMtSeIQ6qVLFJ1/sl2SYLXpgCHh8v/LfhqQ93NurgM+6SKFxOycGgg1FIBaLGw==
+
 "@capacitor/app@4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-4.1.1.tgz#47329e19ecc080bc2934be86566a7673e0f94e5c"
@@ -1403,6 +1408,11 @@
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-4.1.0.tgz#29b082c3b90c920477717a0754017f5d4e43ed15"
   integrity sha512-gAIFy50e1VZPdokRFLkl8Y+yZYB3e4brd5yu9DRShbWbheruwU34TxtG5C1NANvq4mbXd3tMXzBi59Q5JFyTHA==
+
+"@capacitor/ios@4.7.3":
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-4.7.3.tgz#4e4f675afc8a12f458d397bb6cd333a6eb2be183"
+  integrity sha512-CXVvEzg9WWyhGdLSZsWfa69RyNlKH03g4OKpWh9OW0A7uL4aYA8Z7m4jE4mCu/2TTWDEgUPp0BrWEDPaj73eow==
 
 "@capacitor/keyboard@4.1.1":
   version "4.1.1"
