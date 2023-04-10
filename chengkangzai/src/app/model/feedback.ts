@@ -1,12 +1,10 @@
-import firebase from 'firebase/app';
-import Timestamp = firebase.firestore.Timestamp;
-
+import {Timestamp} from '@firebase/firestore-types';
 export class Feedback {
-    constructor(
-        public id: string,
-        public feedback: string,
-        private timestamp: Timestamp,
-        private user: string
-    ) {
-    }
+  constructor(
+    public id: string,
+    public feedback: string,
+    private timestamp: Timestamp,
+    private user: string
+  ) {
+  }
 }

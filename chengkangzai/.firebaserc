@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chengkangzai": {
+      "hosting": {
+        "app": [
+          "chengkangzai"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chengkangzai"
+  }
+}

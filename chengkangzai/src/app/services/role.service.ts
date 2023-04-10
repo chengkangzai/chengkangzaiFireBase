@@ -1,35 +1,37 @@
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from '@angular/fire/auth';
 import {switchMap} from 'rxjs/operators';
-import firebase from 'firebase/app';
-import {Observable} from 'rxjs';
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+// @ts-ignore
+import {Observable} from "rxjs";
+import {User} from "@firebase/auth-types";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class RoleService {
-    constructor(
-        private auth: AngularFireAuth
-    ) {
-    }
+  constructor(
+    private auth: AngularFireAuth
+  ) {
+  }
 
-    getUser(): Observable<firebase.User> {
-        return this.auth.authState.pipe(
-            switchMap(async (User) => {
-                return User;
-            }),
-        );
-    }
+  getUser(): Observable<User | null> {
+    return this.auth.authState.pipe(
+      switchMap(async (User) => {
+        return User;
+      }),
+    );
+  }
 
-    isMaster() {
-        return this.getUser().pipe(switchMap(async User => {
-            if (User) { // check are user is logged in
-                const token = await User.getIdTokenResult();
-                return !!token.claims.master;
-            } else {
-                return false;
-            }
-        }));
-    }
+  isMaster() {
+    return this.getUser().pipe(switchMap(async user => {
+      if (user) {
+        // @ts-ignore
+        const token = await user.getIdTokenResult();
+        return !!token.claims['master'];
+      } else {
+        return false;
+      }
+    }));
+  }
 
 }

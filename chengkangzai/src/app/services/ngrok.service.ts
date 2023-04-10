@@ -1,72 +1,76 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
-import firebase from 'firebase/app';
-import {BehaviorSubject} from 'rxjs';
+// @ts-ignore
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {Ngrok} from '../model/ngrok';
 import {RoleService} from './role.service';
-import Timestamp = firebase.firestore.Timestamp;
+import {Timestamp} from '@firebase/firestore-types';
+import {AngularFirestore} from "@angular/fire/compat/firestore";
 
 export interface NgrokInterface {
-    id: string;
-    PCName: string;
-    ngrok: string;
-    protocol: string;
-    timestamp: Timestamp;
-    vpn: string;
+  id: string;
+  PCName: string;
+  ngrok: string;
+  protocol: string;
+  timestamp: Timestamp;
+  vpn: string;
 }
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class NgrokService {
 
-    constructor(
-        private firestore: AngularFirestore,
-        private roleService: RoleService,
-    ) {
+  constructor(
+    private firestore: AngularFirestore,
+    private roleService: RoleService,
+  ) {
 
-    }
+  }
 
-    // tslint:disable-next-line:variable-name
-    private _ngrok = new BehaviorSubject<NgrokInterface[]>([]);
+  private _ngrok: BehaviorSubject<NgrokInterface[]> = new BehaviorSubject<NgrokInterface[]>([]);
 
-    get ngrok() {
-        return this._ngrok.asObservable();
-    }
+  // @ts-ignore
+  get ngrok() {
+    return this._ngrok.asObservable();
+  }
 
-    fetch() {
-        return this.roleService.getUser().pipe(
-            switchMap(user => {
-                return this.firestore.collection('ngrok', ref => ref.where('email', '==', user?.providerData[0]?.email)
-                ).valueChanges({idField: 'id'}).pipe(
-                    map(resData => {
-                        const temp = [];
-                        (resData as NgrokInterface[]).forEach(data => {
-                            temp.push(new Ngrok(
-                                data.id,
-                                data.PCName,
-                                data.ngrok,
-                                data.protocol,
-                                data.timestamp,
-                                data.vpn
-                            ));
-                        });
-                        return temp;
-                    }),
-                    tap(places => {
-                        return this._ngrok.next(places);
-                    })
-                );
-            }));
-    }
+  fetch() {
+    return this.roleService.getUser()
+      .pipe(
+        switchMap(user => {
+            return this.firestore
+              // .collection('ngrok', ref => ref.where('email', '==', user?.providerData[0]?.email))
+              .collection('ngrok', ref => ref.where('email', '==', 'pycck@hotmail.com'))
+              .valueChanges({idField: 'id'}).pipe(
+                map(resData => {
+                  return (resData as NgrokInterface[])
+                    .map(data => new Ngrok(
+                      data.id,
+                      data.PCName,
+                      data.ngrok,
+                      data.protocol,
+                      data.timestamp,
+                      data.vpn
+                    ));
 
-    calcMissingHour(time: Timestamp): number {
-        return (new Date().getTime() - new Date(time.toDate()).getTime()) / (1000 * 3600);
-    }
+                }),
+                tap(places => {
+                  // @ts-ignore
+                  return this._ngrok.next(places);
+                })
+              );
+          }
+        ))
+      ;
+  }
 
-    async delete(ngrok: Ngrok) {
-        await this.firestore.doc('ngrok/' + ngrok.id).delete();
-    }
+  calcMissingHour(time: Timestamp): number {
+    return (new Date().getTime() - new Date(time.toDate()).getTime()) / (1000 * 3600);
+  }
+
+  async delete(ngrok: Ngrok) {
+    await this.firestore.doc('ngrok/' + ngrok.id).delete();
+  }
 }
